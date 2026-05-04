@@ -16,8 +16,9 @@ ORDRE OP BROKEN HAMMER 3.pdf
 banner-*.avif
 insignia-*.avif
 
-# Videofiler er for store for GitHub (>100MB) — komprimeres separat
-assets/heli-bg-*.mp4
+# Råvideoer er for store for GitHub (>100MB) — komprimeres separat
+assets/heli-bg-1.mp4
+assets/heli-bg-2.mp4
 
 # Unntaksregel: behold andre filer i assets/-mappa
 !assets/
