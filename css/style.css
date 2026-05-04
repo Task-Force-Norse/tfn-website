@@ -133,7 +133,7 @@ section { padding: 5rem 2rem; }
 .pillar-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
 
 /* JSTF / NORDIC */
-#nordic { background: var(--olive-darker); position: relative; z-index: 1; }
+#nordic { background: var(--olive-darker); }
 
 .nordic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
 .nordic-text p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 0.92rem; line-height: 1.9; }
@@ -190,7 +190,6 @@ section { padding: 5rem 2rem; }
 #video-bg {
   position: relative;
   height: 700px;
-  margin-top: -220px;
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
@@ -251,7 +250,7 @@ footer { background: var(--olive-darker); border-top: 1px solid var(--border); p
 @media (max-width: 700px) {
   .stat { padding: 0.5rem 1.5rem; }
   nav .nav-links { display: none; }
-  #video-bg { height: 520px; margin-top: -140px; }
+  #video-bg { height: 520px; }
 }
 
 @media (max-width: 480px) {
