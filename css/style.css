@@ -181,6 +181,8 @@ section { padding: 5rem 2rem; }
 .req { background: var(--olive); padding: 1.2rem 1.5rem; }
 .req-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
 .req-value { font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; color: var(--text); letter-spacing: 0.5px; font-weight: 600; }
+.req-link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.4); transition: border-color 0.2s; }
+.req-link:hover { border-color: var(--gold); }
 
 .join-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
 
