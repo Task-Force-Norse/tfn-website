@@ -1,3 +1,6 @@
+# Kildemateriale-mappe (råfiler, ikke del av nettsiden)
+source-material/
+
 # Råfiler og kildemateriale (ikke del av nettsiden)
 *.mp4
 *.JPG
