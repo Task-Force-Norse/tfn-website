@@ -1,0 +1,21 @@
+# Råfiler og kildemateriale (ikke del av nettsiden)
+*.mp4
+*.JPG
+*.avif
+bef8y3tqx6eg1.png
+1874880_20260208203359_1.png
+20260222190418_1.jpg
+Arma_Reforger_Screenshot_*.png
+Hjort_Inverse_Patch*.png
+OPERATION ORDER_*/
+20260503 Debrief/
+ORDRE OP BROKEN HAMMER 3.pdf
+banner-*.avif
+insignia-*.avif
+
+# Videofiler er for store for GitHub (>100MB) — komprimeres separat
+assets/heli-bg-*.mp4
+
+# Unntaksregel: behold andre filer i assets/-mappa
+!assets/
+!assets/*
