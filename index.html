@@ -306,9 +306,11 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .tw-live-badge{
   position:absolute;top:7px;left:7px;background:#9146ff;color:#fff;
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;
-  padding:3px 7px;display:inline-flex;align-items:center;gap:5px;
+  padding:3px 7px;display:none;align-items:center;gap:5px;
 }
+.tw-live-badge.is-live{display:inline-flex}
 .tw-live-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.4s ease-in-out infinite;flex-shrink:0}
+.tw-sched{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(167,139,219,0.65);text-transform:uppercase;margin-top:5px}
 .media-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
 
 /* ── TWITCH ── */
@@ -655,6 +657,7 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
           <div class="k" style="color:#a78bdb">Twitch · Fremhevet stream</div>
           <div class="t">NTFSteffen</div>
           <div class="m">twitch.tv/NTFSteffen →</div>
+          <div class="tw-sched">Typisk live · Søn 18:45 CET</div>
         </div>
       </a>
       <div class="media-btns">
@@ -737,6 +740,22 @@ window.addEventListener('scroll', () => {
   if (y < window.innerHeight && heroVid)
     heroVid.style.transform = `translateY(${y * 0.3}px) scale(1.05)`;
 }, { passive: true });
+
+// ── TWITCH LIVE CHECK (søndag 18:00–23:00 norsk tid) ─────────
+(function () {
+  const now = new Date();
+  const parts = new Intl.DateTimeFormat('en', {
+    timeZone: 'Europe/Oslo',
+    weekday: 'short',
+    hour: 'numeric',
+    hour12: false
+  }).formatToParts(now);
+  const day  = parts.find(p => p.type === 'weekday')?.value; // 'Sun'
+  const hour = parseInt(parts.find(p => p.type === 'hour')?.value ?? '0');
+  if (day === 'Sun' && hour >= 18 && hour < 23) {
+    document.querySelector('.tw-live-badge')?.classList.add('is-live');
+  }
+})();
 
 // ── LIVE TIMECODE ────────────────────────────────────────────
 const tcEl = document.getElementById('vl-tc');
