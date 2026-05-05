@@ -148,7 +148,7 @@ a{color:inherit}
 .btn:hover .btn-arrow{transform:translateX(3px)}
 
 /* ── STATS STRIPE ── */
-.stripe{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--green-2);padding:0}
+.stripe{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--ink);padding:0}
 .stripe-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 .stripe .cell{padding:24px 20px;border-right:1px solid var(--rule);position:relative}
 .stripe .cell:last-child{border-right:none}
@@ -168,8 +168,8 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .lede{font-size:17px;color:var(--bone-2);max-width:680px;line-height:1.65;font-weight:300;margin-bottom:48px}
 
 /* ── OM TFN ── */
-#om{background:#141210;position:relative}
-#om::before{content:'';position:absolute;inset:0;background:url('assets/hero-convoy.png') center/cover no-repeat;opacity:.2;z-index:0;pointer-events:none}
+#om{background:#1c1814;position:relative;padding-top:130px;padding-bottom:130px}
+#om::before{content:'';position:absolute;inset:0;background:url('assets/hero-convoy.png') center/cover no-repeat;opacity:.25;z-index:0;pointer-events:none}
 #om>.wrap{position:relative;z-index:1}
 .om-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center}
 .om-deco{min-height:280px}
@@ -179,7 +179,7 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .om-text a:hover{border-color:var(--ember)}
 
 /* ── MILSIM ── */
-#milsim{background:var(--green-3)}
+#milsim{background:var(--green-2)}
 .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border:1px solid var(--rule-strong);background:rgba(20,26,17,0.4)}
 .pillar{padding:32px;border-right:1px solid var(--rule);position:relative;transition:background .2s}
 .pillar:last-child{border-right:none}
@@ -192,7 +192,7 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .pillar-text{font-size:14px;color:var(--bone-2);line-height:1.65}
 
 /* ── JSTF ── */
-#nordic{background:var(--green-2)}
+#nordic{background:var(--green-3)}
 .nordic-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start}
 .nordic-text p{margin-bottom:18px;color:var(--bone-2);font-size:15.5px;line-height:1.75}
 .nordic-text strong{color:var(--bone);font-weight:500}
@@ -262,6 +262,19 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .video-left{position:relative;overflow:hidden;border-right:1px solid var(--rule-strong)}
 .video-left video{width:100%;height:100%;object-fit:cover;opacity:.7}
 .video-left::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,var(--green-2));pointer-events:none}
+/* Live-feed HUD overlay */
+.vl-hud{position:absolute;inset:0;z-index:2;pointer-events:none}
+.vl-rec{position:absolute;top:20px;left:20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--bone);display:flex;align-items:center;gap:6px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.vl-rec .rec-dot{width:7px;height:7px;border-radius:50%;background:#e03434;flex-shrink:0;animation:pulse 1.4s ease-in-out infinite}
+.vl-ch{position:absolute;top:20px;right:20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--bone-2);text-align:right;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.vl-tc{position:absolute;bottom:52px;left:20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--bone-2);text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.vl-pos{position:absolute;bottom:20px;left:20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(236,228,210,0.5);text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.vl-corners{position:absolute;inset:16px;z-index:2;pointer-events:none;border:1px solid rgba(255,255,255,0.08)}
+.vl-corners::before,.vl-corners::after,.vl-corners>span::before,.vl-corners>span::after{content:'';position:absolute;width:12px;height:12px;border:2px solid rgba(217,106,44,.55)}
+.vl-corners::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.vl-corners::after{top:-1px;right:-1px;border-left:none;border-bottom:none}
+.vl-corners>span::before{bottom:-1px;left:-1px;border-right:none;border-top:none}
+.vl-corners>span::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
 .video-right{padding:72px 48px;display:flex;flex-direction:column;justify-content:center;gap:16px}
 .video-right .h2{font-size:clamp(28px,3.6vw,48px);margin-bottom:0}
 .video-right > p{color:var(--bone-2);font-size:15.5px;margin-bottom:12px;max-width:420px;line-height:1.65}
@@ -281,13 +294,20 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .yt-body .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--bone-2);text-transform:uppercase;margin-bottom:6px}
 .yt-body .t{font-family:'Oswald',sans-serif;font-size:18px;color:var(--bone);font-weight:500;letter-spacing:.02em;line-height:1.2;margin-bottom:6px}
 .yt-body .m{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--bone-2)}
-.tw-card{
-  border:1px solid var(--rule);background:rgba(20,26,17,0.4);
-  padding:18px 20px;display:flex;flex-direction:column;gap:10px;
+.tw-card-link{
+  border:1px solid var(--rule-strong);background:var(--green-3);
+  display:grid;grid-template-columns:120px 1fr;gap:0;align-items:stretch;
+  text-decoration:none;color:inherit;transition:border-color .2s;
 }
-.tw-card .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#a78bdb;text-transform:uppercase}
-.tw-card p{color:var(--bone-2);font-size:14px;line-height:1.6;margin:0}
-.tw-card strong{color:var(--bone)}
+.tw-card-link:hover{border-color:#9146ff}
+.tw-thumb{aspect-ratio:1;background:var(--green-3);position:relative;overflow:hidden;border-right:1px solid var(--rule)}
+.tw-thumb img{width:100%;height:100%;object-fit:cover}
+.tw-live-badge{
+  position:absolute;top:7px;left:7px;background:#9146ff;color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;
+  padding:3px 7px;display:inline-flex;align-items:center;gap:5px;
+}
+.tw-live-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.4s ease-in-out infinite;flex-shrink:0}
 .media-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
 
 /* ── TWITCH ── */
@@ -579,14 +599,14 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
       <p class="lede">Skjermbilder fra TFN- og JSTF-operasjoner i Arma Reforger. Mer i Discord, og hele oppdrag på YouTube.</p>
     </div>
     <div class="gallery-grid reveal">
-      <a class="tile t-a" href="assets/gallery/g05.png" target="_blank" rel="noopener"><img src="assets/gallery/g05.png" alt="" loading="lazy"><div class="tile-meta"><span>OP Cliffhanger 2 · Wadi-kryssing</span><span class="x">2026·02·15</span></div></a>
-      <a class="tile t-b" href="assets/gallery/g11.png" target="_blank" rel="noopener"><img src="assets/gallery/g11.png" alt="" loading="lazy"><div class="tile-meta"><span>JTAC · Luftkontroll</span><span class="x">2026·02·22</span></div></a>
-      <a class="tile t-c" href="assets/gallery/g03.png" target="_blank" rel="noopener"><img src="assets/gallery/g03.png" alt="" loading="lazy"><div class="tile-meta"><span>JSTF · Kompani-formasjon</span><span class="x">2026·03·08</span></div></a>
-      <a class="tile t-d" href="assets/gallery/g08.png" target="_blank" rel="noopener"><img src="assets/gallery/g08.png" alt="" loading="lazy"><div class="tile-meta"><span>OP Broken Hammer 3 · Stridskontakt</span><span class="x">2026·03·27</span></div></a>
-      <a class="tile t-e" href="assets/gallery/g12.png" target="_blank" rel="noopener"><img src="assets/gallery/g12.png" alt="" loading="lazy"><div class="tile-meta"><span>Logistikk · Forsyningslinje</span><span class="x">2026·03·08</span></div></a>
-      <a class="tile t-f" href="assets/gallery/g01.png" target="_blank" rel="noopener"><img src="assets/gallery/g01.png" alt="" loading="lazy"><div class="tile-meta"><span>OP Cliffhanger 1 · Urban breach</span><span class="x">2026·02·22</span></div></a>
-      <a class="tile t-g" href="assets/gallery/g04.png" target="_blank" rel="noopener"><img src="assets/gallery/g04.png" alt="" loading="lazy"><div class="tile-meta"><span>Rekognosering · Skogsposisjon</span><span class="x">2026·01·27</span></div></a>
-      <a class="tile t-h" href="assets/gallery/g02.png" target="_blank" rel="noopener"><img src="assets/gallery/g02.png" alt="" loading="lazy"><div class="tile-meta"><span>Convoy Alpha · Desert approach</span><span class="x">2026·02·01</span></div></a>
+      <a class="tile t-a" href="assets/gallery/bef8y3tqx6eg1.png" target="_blank" rel="noopener"><img src="assets/gallery/bef8y3tqx6eg1.png" alt="" loading="lazy"><div class="tile-meta"><span>Norsk soldat · Ørken-deployering</span><span class="x">2026·02·08</span></div></a>
+      <a class="tile t-b" href="assets/gallery/g11.png" target="_blank" rel="noopener"><img src="assets/gallery/g11.png" alt="" loading="lazy"><div class="tile-meta"><span>Mekanisert · Konvoi-klargjøring</span><span class="x">2026·02·08</span></div></a>
+      <a class="tile t-c" href="assets/gallery/g03.png" target="_blank" rel="noopener"><img src="assets/gallery/g03.png" alt="" loading="lazy"><div class="tile-meta"><span>Rekognosering · Skogsposisjon</span><span class="x">2026·03·08</span></div></a>
+      <a class="tile t-d" href="assets/gallery/g08.png" target="_blank" rel="noopener"><img src="assets/gallery/g08.png" alt="" loading="lazy"><div class="tile-meta"><span>JSTF · Kompani-formasjon</span><span class="x">2026·03·19</span></div></a>
+      <a class="tile t-e" href="assets/gallery/g12.png" target="_blank" rel="noopener"><img src="assets/gallery/g12.png" alt="" loading="lazy"><div class="tile-meta"><span>Mekanisert · Framrykk</span><span class="x">2026·03·08</span></div></a>
+      <a class="tile t-f" href="assets/gallery/g01.png" target="_blank" rel="noopener"><img src="assets/gallery/g01.png" alt="" loading="lazy"><div class="tile-meta"><span>CQB · Byoperasjon</span><span class="x">2026·02·22</span></div></a>
+      <a class="tile t-g" href="assets/gallery/g04.png" target="_blank" rel="noopener"><img src="assets/gallery/g04.png" alt="" loading="lazy"><div class="tile-meta"><span>Wadi-kryssing · Kjøretøy</span><span class="x">2026·02·15</span></div></a>
+      <a class="tile t-h" href="assets/gallery/g02.png" target="_blank" rel="noopener"><img src="assets/gallery/g02.png" alt="" loading="lazy"><div class="tile-meta"><span>Stridskontakt · Ørken</span><span class="x">2026·02·01</span></div></a>
     </div>
   </div>
 </section>
@@ -606,22 +626,36 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
       <video autoplay muted loop playsinline>
         <source src="assets/background-web.mp4" type="video/mp4">
       </video>
+      <div class="vl-hud">
+        <div class="vl-rec"><span class="rec-dot"></span>REC</div>
+        <div class="vl-ch">CH-01 · TFN FEEDS</div>
+        <div class="vl-tc" id="vl-tc">00:00:00:00</div>
+        <div class="vl-pos">59°54'N · 10°45'E · ALT 234m</div>
+      </div>
+      <div class="vl-corners"><span></span></div>
     </div>
     <div class="video-right">
       <div class="eyebrow">006 · Følg oss</div>
       <h2 class="h2">YouTube<br>& Streams</h2>
       <a class="yt-card" href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">
-        <div class="yt-thumb"><img src="assets/gallery/g05.png" alt="TFN i aksjon"></div>
+        <div class="yt-thumb"><img src="assets/yt-thumbnail.png" alt="TFN i aksjon"></div>
         <div class="yt-body">
           <div class="k">YouTube · Siste video</div>
           <div class="t">OP Cliffhanger — JSTF Combined Arms</div>
           <div class="m">@TaskForceNorse · YouTube →</div>
         </div>
       </a>
-      <div class="tw-card">
-        <div class="k">Twitch · Medlemsstreams</div>
-        <p>Enkeltmedlemmer i TFN streamer live fra operasjoner. Sjekk <strong>#streams</strong> på Discord for å se hvem som er live akkurat nå.</p>
-      </div>
+      <a class="tw-card-link" href="https://www.twitch.tv/NTFSteffen" target="_blank" rel="noopener">
+        <div class="tw-thumb">
+          <img src="assets/tw-thumbnail.jpg" alt="NTFSteffen stream">
+          <div class="tw-live-badge">LIVE</div>
+        </div>
+        <div class="yt-body">
+          <div class="k" style="color:#a78bdb">Twitch · Fremhevet stream</div>
+          <div class="t">NTFSteffen</div>
+          <div class="m">twitch.tv/NTFSteffen →</div>
+        </div>
+      </a>
       <div class="media-btns">
         <a class="btn btn-ghost" href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">YouTube <span class="btn-arrow">→</span></a>
         <a class="btn btn-ghost" href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener">Discord <span class="btn-arrow">→</span></a>
@@ -702,6 +736,19 @@ window.addEventListener('scroll', () => {
   if (y < window.innerHeight && heroVid)
     heroVid.style.transform = `translateY(${y * 0.3}px) scale(1.05)`;
 }, { passive: true });
+
+// ── LIVE TIMECODE ────────────────────────────────────────────
+const tcEl = document.getElementById('vl-tc');
+if (tcEl) {
+  let s = 0;
+  setInterval(() => {
+    s++;
+    const hh = String(Math.floor(s / 3600)).padStart(2, '0');
+    const mm = String(Math.floor(s % 3600 / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    tcEl.textContent = `${hh}:${mm}:${ss}:00`;
+  }, 1000);
+}
 
 // ── AKTIV NAV-LENKE ──────────────────────────────────────────
 const sections = document.querySelectorAll('section[id], div[id="twitch-section"]');
