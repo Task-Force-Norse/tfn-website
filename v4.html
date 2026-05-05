@@ -1,680 +1,746 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Force Norse | Norsk Milsim</title>
-  <meta name="description" content="Task Force Norse — norsktalende milsim-enhet i Arma Reforger. Autentisk, samarbeid, innlevelse.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* ── V4 HERO ADDITIONS ──────────────────────────────── */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Force Norse | Norsk Milsim</title>
+<meta name="description" content="Task Force Norse — norsktalende milsim-enhet i Arma Reforger. Autentisk, samarbeid, innlevelse.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#2b3526;
+  --green-2:#1d2419;
+  --green-3:#141a11;
+  --bone:#ece4d2;
+  --bone-2:#d6cdb6;
+  --ember:#d96a2c;
+  --ember-2:#a14e1f;
+  --ink:#0c0f0a;
+  --rule:rgba(236,228,210,0.18);
+  --rule-strong:rgba(236,228,210,0.4);
+  --grid:rgba(236,228,210,0.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--green-3);
+  color:var(--bone);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:48px 48px;
+  background-position:-1px -1px;
+}
+a{color:inherit}
 
-    /* Grid-bakgrunn på hele siden */
-    body {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 48px 48px;
-    }
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(12,15,10,0.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar-inner{
+  max-width:1280px;margin:0 auto;padding:0 24px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--bone)}
+.brand img{height:36px;width:auto}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-text .name{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;letter-spacing:.18em;text-transform:uppercase}
+.brand-text .sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--bone-2);letter-spacing:.15em;margin-top:3px;opacity:.7}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);text-decoration:none;transition:color .15s;display:flex;align-items:center;gap:8px}
+.nav-links a::before{content:'//';color:var(--ember);opacity:.5}
+.nav-links a:hover,.nav-links a.active{color:var(--bone)}
+.nav-cta{
+  font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  background:var(--ember);color:var(--ink);padding:10px 18px;text-decoration:none;
+  border:1px solid var(--ember);transition:all .15s;
+}
+.nav-cta:hover{background:var(--ember-2);border-color:var(--ember-2)}
 
-    /* Hjørnemarkører */
-    .hero-corners {
-      position: absolute;
-      inset: 96px 32px 130px;
-      border: 1px solid rgba(255,255,255,0.12);
-      pointer-events: none;
-      z-index: 2;
-    }
-    .hero-corners::before, .hero-corners::after,
-    .hero-corners > span::before, .hero-corners > span::after {
-      content: '';
-      position: absolute;
-      width: 14px; height: 14px;
-      border: 2px solid var(--gold);
-    }
-    .hero-corners::before  { top: -1px;    left: -1px;  border-right: none; border-bottom: none; }
-    .hero-corners::after   { top: -1px;    right: -1px; border-left: none;  border-bottom: none; }
-    .hero-corners > span::before { bottom: -1px; left: -1px;  border-right: none; border-top: none; }
-    .hero-corners > span::after  { bottom: -1px; right: -1px; border-left: none;  border-top: none; }
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  border-bottom:1px solid var(--rule);
+}
+.hero-video-wrap{position:absolute;inset:0;overflow:hidden;will-change:transform}
+.hero-video-wrap video{width:100%;height:100%;object-fit:cover;opacity:.55;filter:saturate(.7) contrast(1.05)}
+.hero-overlay{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 30% 30%, rgba(217,106,44,0.12), transparent 50%),
+  linear-gradient(180deg,rgba(12,15,10,0.45) 0%,rgba(12,15,10,0.7) 60%,rgba(12,15,10,0.95) 100%);
+}
+.hero-grain{position:absolute;inset:0;opacity:.4;pointer-events:none;mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:3px 3px;
+}
 
-    /* Meta-linje */
-    .hero-meta {
-      display: flex;
-      gap: 1.8rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.2rem;
-      opacity: 0.85;
-    }
-    .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
-    .hero-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
+/* Ramme over hele vinduet */
+.hero-corners{position:absolute;inset:0;pointer-events:none;border:1px solid var(--rule-strong);margin:96px 24px 24px;}
+.hero-corners::before,.hero-corners::after,
+.hero-corners > span::before,.hero-corners > span::after{
+  content:'';position:absolute;width:16px;height:16px;border:2px solid var(--ember);
+}
+.hero-corners::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.hero-corners::after{top:-1px;right:-1px;border-left:none;border-bottom:none}
+.hero-corners > span::before{bottom:-1px;left:-1px;border-right:none;border-top:none}
+.hero-corners > span::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
 
-    /* Ribbon med ticker */
-    .hero-ribbon {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      background: rgba(10, 12, 18, 0.82);
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .hero-ribbon-inner {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 0.6rem 1.5rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .hero-ribbon .r-stat {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9.5px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      display: flex; flex-direction: column; gap: 2px;
-    }
-    .hero-ribbon .r-stat span { color: var(--text-muted); }
-    .hero-ribbon .r-stat b    { color: var(--gold); font-weight: 500; }
+/* POS som GUI-element */
+.hero-pos{
+  position:absolute;bottom:32px;left:40px;z-index:3;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--bone-2);
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(12,15,10,0.65);
+  border:1px solid var(--rule-strong);
+  padding:6px 12px;
+  pointer-events:none;
+}
+.hero-pos .pos-lbl{color:var(--ember)}
 
-    .ticker-window {
-      overflow: hidden;
-      mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-    }
-    .ticker {
-      display: flex;
-      gap: 3rem;
-      white-space: nowrap;
-      animation: ticker 40s linear infinite;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .ticker .t-sep { color: var(--gold); opacity: 0.6; }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+.hero-content{
+  position:relative;z-index:2;flex:1;
+  max-width:1280px;width:100%;margin:0 auto;
+  padding:96px 48px 80px;
+  display:grid;grid-template-columns:auto 1fr;gap:64px;align-items:center;
+}
+.hero-patch{
+  width:180px;height:auto;
+  filter:drop-shadow(0 8px 30px rgba(0,0,0,0.7));
+}
+.hero-meta{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--bone-2);margin-bottom:16px;
+  display:flex;gap:16px;flex-wrap:wrap;
+}
+.hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:6px;height:6px;background:var(--ember);border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{
+  font-family:'Oswald',sans-serif;font-weight:600;
+  font-size:clamp(48px,7.5vw,104px);line-height:.92;letter-spacing:.01em;
+  text-transform:uppercase;color:var(--bone);margin-bottom:20px;
+}
+.hero-title em{font-style:normal;color:var(--ember);font-weight:500}
+.hero-sub{
+  font-family:'Inter',sans-serif;font-size:17px;line-height:1.55;color:var(--bone-2);
+  max-width:540px;margin-bottom:36px;font-weight:300;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{
+  font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:.18em;text-transform:uppercase;
+  padding:14px 28px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:10px;
+  transition:all .15s;border:1px solid transparent;cursor:pointer;
+}
+.btn-primary{background:var(--ember);color:var(--ink);border-color:var(--ember)}
+.btn-primary:hover{background:var(--ember-2);border-color:var(--ember-2)}
+.btn-ghost{background:transparent;color:var(--bone);border-color:var(--rule-strong)}
+.btn-ghost:hover{border-color:var(--bone)}
+.btn-arrow{transition:transform .15s}
+.btn:hover .btn-arrow{transform:translateX(3px)}
 
-    /* Seksjonsetiketter (eyebrow) */
-    .section-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      opacity: 0.8;
-    }
+/* ── STATS STRIPE ── */
+.stripe{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--green-2);padding:0}
+.stripe-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.stripe .cell{padding:24px 20px;border-right:1px solid var(--rule);position:relative}
+.stripe .cell:last-child{border-right:none}
+.stripe .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-2);margin-bottom:8px}
+.stripe .v{font-family:'Oswald',sans-serif;font-weight:500;font-size:22px;color:var(--bone);letter-spacing:.02em}
+.stripe .cell::before{content:'';position:absolute;top:8px;left:8px;width:6px;height:6px;border:1px solid var(--ember);opacity:.6}
 
-    /* ── GALLERI ─────────────────────────────────────────── */
-    #gallery { background: var(--olive-darker); padding: 5rem 2rem; }
+/* ── SECTIONS ── */
+section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
+.wrap{max-width:1280px;margin:0 auto}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ember);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--ember)}
+.h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:.01em;text-transform:uppercase;color:var(--bone);margin-bottom:16px}
+.lede{font-size:17px;color:var(--bone-2);max-width:680px;line-height:1.65;font-weight:300;margin-bottom:48px}
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: 96px;
-      gap: 6px;
-      margin-top: 2rem;
-    }
-    .tile {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--olive-dark);
-      display: block;
-    }
-    .tile img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease, filter 0.3s;
-      filter: saturate(0.85);
-    }
-    .tile:hover img { transform: scale(1.04); filter: saturate(1.1); }
-    .tile-meta {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 8px 10px;
-      background: linear-gradient(to top, rgba(0,0,0,0.88), transparent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9.5px; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--text-muted);
-      display: flex; justify-content: space-between;
-      opacity: 0; transition: opacity 0.2s;
-    }
-    .tile:hover .tile-meta { opacity: 1; }
-    /* Masonry-størrelser */
-    .t-a { grid-column: span 6; grid-row: span 4; }
-    .t-b { grid-column: span 3; grid-row: span 2; }
-    .t-c { grid-column: span 3; grid-row: span 2; }
-    .t-d { grid-column: span 3; grid-row: span 2; }
-    .t-e { grid-column: span 3; grid-row: span 2; }
-    .t-f { grid-column: span 4; grid-row: span 3; }
-    .t-g { grid-column: span 4; grid-row: span 3; }
-    .t-h { grid-column: span 4; grid-row: span 3; }
+/* ── OM TFN ── */
+#om{background:var(--green-3);position:relative}
+#om::before{content:'';position:absolute;inset:0;background:url('assets/hero-convoy.png') center/cover no-repeat;opacity:.12;z-index:0;pointer-events:none}
+#om>.wrap{position:relative;z-index:1}
+.om-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
+.om-text p{margin-bottom:18px;color:var(--bone-2);font-size:15.5px;line-height:1.75}
+.om-text strong{color:var(--bone);font-weight:500}
+.om-text a{color:var(--ember);text-decoration:none;border-bottom:1px solid rgba(217,106,44,0.4)}
+.om-text a:hover{border-color:var(--ember)}
+.callout{
+  background:rgba(217,106,44,0.06);border:1px solid rgba(217,106,44,0.3);
+  padding:24px;margin-top:28px;
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:var(--bone);position:relative;
+}
+.callout::before{
+  content:'FILOSOFI · 01';position:absolute;top:-9px;left:18px;background:var(--green-3);padding:0 8px;
+  font-size:10px;letter-spacing:.22em;color:var(--ember);
+}
+.om-photo{position:relative;overflow:hidden;border:1px solid var(--rule-strong)}
+.om-photo img{width:100%;display:block;filter:saturate(.85) contrast(1.05)}
+.om-photo-meta{
+  position:absolute;left:0;bottom:0;right:0;padding:14px 18px;
+  background:linear-gradient(to top,rgba(12,15,10,0.95),transparent);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);
+  display:flex;justify-content:space-between;
+}
 
-    @media (max-width: 900px) {
-      .gallery-grid {
-        grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 80px;
-      }
-      .t-a { grid-column: span 6; grid-row: span 3; }
-      .t-b, .t-c, .t-d, .t-e { grid-column: span 3; grid-row: span 2; }
-      .t-f, .t-g, .t-h { grid-column: span 3; grid-row: span 2; }
-    }
-    @media (max-width: 600px) {
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 120px; }
-      .t-a { grid-column: span 2; grid-row: span 2; }
-      .t-b, .t-c, .t-d, .t-e, .t-f, .t-g, .t-h { grid-column: span 1; grid-row: span 1; }
-    }
+/* ── MILSIM ── */
+#milsim{background:var(--green-3)}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border:1px solid var(--rule-strong);background:rgba(20,26,17,0.4)}
+.pillar{padding:32px;border-right:1px solid var(--rule);position:relative;transition:background .2s}
+.pillar:last-child{border-right:none}
+.pillar:hover{background:rgba(217,106,44,0.04)}
+.pillar-num{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.22em;color:var(--ember);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.pillar-num::after{content:'';flex:1;height:1px;background:var(--rule)}
+.pillar-icon{width:42px;height:42px;color:var(--bone);margin-bottom:18px}
+.pillar-icon svg{width:100%;height:100%}
+.pillar-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone);margin-bottom:12px}
+.pillar-text{font-size:14px;color:var(--bone-2);line-height:1.65}
 
-    /* ── TWITCH ──────────────────────────────────────────── */
-    #twitch-section {
-      background: var(--olive-dark);
-      padding: 3rem 2rem;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    #twitch-section .section-inner { max-width: 1100px; margin: 0 auto; }
-    .live-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #e03434;
-      margin-right: 0.4rem;
-      animation: pulse 1.4s ease-in-out infinite;
-      vertical-align: middle;
-    }
-    #twitch-embed iframe { display: block; border: 1px solid var(--border); margin-top: 1.5rem; }
-  </style>
+/* ── JSTF ── */
+#nordic{background:var(--green-2)}
+.nordic-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start}
+.nordic-text p{margin-bottom:18px;color:var(--bone-2);font-size:15.5px;line-height:1.75}
+.nordic-text strong{color:var(--bone);font-weight:500}
+.jstf-img{
+  position:relative;overflow:hidden;border:1px solid var(--rule-strong);margin-bottom:20px;
+}
+.jstf-img img{width:100%;display:block;filter:saturate(.85) contrast(1.05)}
+.flag-row{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+.flag-row svg{height:30px;width:auto;border:1px solid var(--rule-strong)}
+.flag-lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-2);margin-left:6px}
+.nordic-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule-strong)}
+.nordic-stat{background:var(--green-2);padding:18px 20px}
+.nordic-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--bone-2);text-transform:uppercase;margin-bottom:6px}
+.nordic-stat .v{font-family:'Oswald',sans-serif;font-size:24px;color:var(--ember);font-weight:600}
+
+/* ── REKRUTTERING ── */
+#bli-med{background:var(--green-3)}
+.opord{border:1px solid var(--rule-strong);background:rgba(20,26,17,0.5);margin-top:40px}
+.opord-head{
+  display:grid;grid-template-columns:1fr auto;gap:16px;
+  padding:16px 24px;border-bottom:1px solid var(--rule);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-2);
+}
+.opord-head .l{color:var(--ember)}
+.opord-body{padding:0}
+.phases{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.phase{padding:36px 28px;border-right:1px solid var(--rule);position:relative}
+.phase:last-child{border-right:none}
+.phase-id{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--ember);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.phase-id::after{content:'';flex:1;height:1px;background:var(--rule)}
+.phase-icon{width:48px;height:48px;border:1px solid var(--rule-strong);display:flex;align-items:center;justify-content:center;color:var(--bone);margin-bottom:18px;background:var(--green-3)}
+.phase-icon svg{width:26px;height:26px}
+.phase-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;letter-spacing:.04em;text-transform:uppercase;color:var(--bone);margin-bottom:12px}
+.phase-text{color:var(--bone-2);font-size:14.5px;line-height:1.65}
+.requirements{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.req{padding:18px 24px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.req:nth-child(3n){border-right:none}
+.req:nth-last-child(-n+3){border-bottom:none}
+.req .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--ember);text-transform:uppercase;margin-bottom:6px}
+.req .v{font-family:'Oswald',sans-serif;font-size:16px;color:var(--bone);font-weight:500;letter-spacing:.04em}
+.req a{color:inherit;border-bottom:1px solid rgba(217,106,44,0.4);text-decoration:none}
+.cta-row{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+
+/* ── GALLERI ── */
+#gallery{background:var(--green-3)}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:96px;gap:8px;margin-top:32px;
+}
+.tile{position:relative;overflow:hidden;border:1px solid var(--rule);cursor:pointer;background:var(--green-2);display:block;text-decoration:none}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease,filter .3s;filter:saturate(.9)}
+.tile:hover img{transform:scale(1.04);filter:saturate(1.1)}
+.tile-meta{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(to top,rgba(12,15,10,0.92),transparent);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);display:flex;justify-content:space-between;opacity:0;transition:opacity .2s}
+.tile:hover .tile-meta{opacity:1}
+.tile-meta .x{color:var(--ember)}
+.t-a{grid-column:span 6;grid-row:span 4}
+.t-b{grid-column:span 3;grid-row:span 2}
+.t-c{grid-column:span 3;grid-row:span 2}
+.t-d{grid-column:span 3;grid-row:span 2}
+.t-e{grid-column:span 3;grid-row:span 2}
+.t-f{grid-column:span 4;grid-row:span 3}
+.t-g{grid-column:span 4;grid-row:span 3}
+.t-h{grid-column:span 4;grid-row:span 3}
+
+/* ── YOUTUBE / VIDEO ── */
+#video{background:var(--green-2);padding:0;border-bottom:1px solid var(--rule)}
+.video-grid{display:grid;grid-template-columns:1.4fr 1fr;min-height:560px}
+.video-left{position:relative;overflow:hidden;border-right:1px solid var(--rule-strong)}
+.video-left video{width:100%;height:100%;object-fit:cover;opacity:.7}
+.video-left::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,var(--green-2));pointer-events:none}
+.video-right{padding:72px 48px;display:flex;flex-direction:column;justify-content:center}
+.video-right .h2{font-size:clamp(28px,3.6vw,48px);margin-bottom:14px}
+.video-right > p{color:var(--bone-2);font-size:15.5px;margin-bottom:28px;max-width:420px;line-height:1.65}
+.yt-card{
+  border:1px solid var(--rule-strong);background:var(--green-3);
+  display:grid;grid-template-columns:120px 1fr;gap:0;align-items:stretch;
+  text-decoration:none;color:inherit;transition:border-color .2s;
+}
+.yt-card:hover{border-color:var(--ember)}
+.yt-thumb{aspect-ratio:1;background:var(--green-3);position:relative;overflow:hidden;border-right:1px solid var(--rule)}
+.yt-thumb img{width:100%;height:100%;object-fit:cover}
+.yt-thumb::after{
+  content:'▶';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:var(--ember);font-size:24px;text-shadow:0 0 14px rgba(0,0,0,.6);
+}
+.yt-body{padding:14px 18px;display:flex;flex-direction:column;justify-content:center}
+.yt-body .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--bone-2);text-transform:uppercase;margin-bottom:6px}
+.yt-body .t{font-family:'Oswald',sans-serif;font-size:18px;color:var(--bone);font-weight:500;letter-spacing:.02em;line-height:1.2;margin-bottom:6px}
+.yt-body .m{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--bone-2)}
+.yt-btn-row{margin-top:20px}
+
+/* ── TWITCH ── */
+#twitch-section{background:var(--green-2);padding:72px 48px;border-bottom:1px solid var(--rule)}
+#twitch-section .wrap{max-width:1280px;margin:0 auto}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e03434;margin-right:6px;animation:pulse 1.4s ease-in-out infinite;vertical-align:middle}
+#twitch-embed iframe{display:block;border:1px solid var(--rule-strong);margin-top:24px;width:100%;height:500px}
+
+/* ── FOOTER ── */
+footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var(--rule-strong)}
+.foot{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:48px}
+.foot-brand img{height:64px;margin-bottom:16px;display:block}
+.foot-brand .name{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone)}
+.foot-brand .sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--bone-2);letter-spacing:.18em;margin-top:6px;text-transform:uppercase}
+.foot-col h4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.22em;color:var(--ember);text-transform:uppercase;margin-bottom:14px;font-weight:500}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:8px}
+.foot-col a{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--bone-2);text-decoration:none;transition:color .15s}
+.foot-col a:hover{color:var(--bone)}
+.foot-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2)}
+.foot-legal{max-width:760px;margin:24px auto 0;font-family:'Inter',sans-serif;font-size:11.5px;line-height:1.7;color:rgba(236,228,210,0.4);text-align:center;padding:0 16px}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:980px){
+  .hero-content{grid-template-columns:1fr;padding:120px 24px 64px;gap:24px}
+  .hero-patch{width:100px}
+  .hero-corners{margin:80px 16px 16px}
+  .hero-pos{left:24px;bottom:20px}
+  .om-grid,.nordic-grid{grid-template-columns:1fr;gap:36px}
+  .video-grid{grid-template-columns:1fr;min-height:auto}
+  .video-left{min-height:280px;border-right:none;border-bottom:1px solid var(--rule-strong)}
+  .video-right{padding:40px 24px}
+  .pillars{grid-template-columns:1fr 1fr}
+  .pillar{border-right:none;border-bottom:1px solid var(--rule)}
+  .phases{grid-template-columns:1fr}
+  .phase{border-right:none;border-bottom:1px solid var(--rule)}
+  .requirements{grid-template-columns:1fr 1fr}
+  .req:nth-child(3n){border-right:1px solid var(--rule)}
+  .req:nth-child(2n){border-right:none}
+  .stripe-inner{grid-template-columns:1fr 1fr}
+  .stripe .cell{border-right:none;border-bottom:1px solid var(--rule)}
+  .stripe .cell:nth-child(2n-1){border-right:1px solid var(--rule)}
+  .gallery-grid{grid-auto-rows:80px}
+  .t-a{grid-column:span 12;grid-row:span 4}
+  .t-b,.t-c,.t-d,.t-e{grid-column:span 6}
+  .t-f,.t-g,.t-h{grid-column:span 12;grid-row:span 3}
+  .foot{grid-template-columns:1fr 1fr;gap:32px}
+  section{padding:64px 24px}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:120px}
+  .t-a{grid-column:span 2;grid-row:span 2}
+  .t-b,.t-c,.t-d,.t-e,.t-f,.t-g,.t-h{grid-column:span 1;grid-row:span 1}
+}
+</style>
 </head>
 <body>
 
-  <!-- NAVIGASJON -->
-  <nav>
-    <a href="#hero" class="nav-logo">
-      <img src="assets/logo-patch.png" alt="TFN emblem">
-      <span class="nav-logo-text">Task Force Norse</span>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo-patch.png" alt="TFN">
+      <span class="brand-text">
+        <span class="name">Task Force Norse</span>
+        <span class="sub">[TFN] · Norsk Milsim</span>
+      </span>
     </a>
     <ul class="nav-links">
-      <li><a href="#om">Om TFN</a></li>
+      <li><a href="#om">Om</a></li>
       <li><a href="#milsim">Milsim</a></li>
       <li><a href="#nordic">JSTF</a></li>
-      <li><a href="#gallery">Galleri</a></li>
       <li><a href="#bli-med">Bli med</a></li>
+      <li><a href="#gallery">Galleri</a></li>
+      <li><a href="#video">YouTube</a></li>
     </ul>
-    <a href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener" class="nav-cta">Discord</a>
-  </nav>
+    <a class="nav-cta" href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener">Discord →</a>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-content">
-      <!-- Hjørnemarkører -->
-      <div class="hero-corners"><span></span></div>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-video-wrap" id="heroVideo">
+    <video autoplay muted loop playsinline>
+      <source src="assets/heli-bg-1-web.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-corners"><span></span></div>
 
-      <img src="assets/logo-patch.png" alt="Task Force Norse emblem" class="hero-logo">
-
-      <!-- Meta-linje -->
+  <div class="hero-content">
+    <img class="hero-patch" src="assets/logo-patch.png" alt="TFN emblem">
+    <div>
       <div class="hero-meta">
-        <span><span class="hero-dot"></span>OPS · AKTIV</span>
+        <span><span class="dot"></span>OPS · AKTIV</span>
         <span>EST. 08·2025</span>
         <span>NOR · ENG</span>
         <span>ARMA REFORGER · PC</span>
       </div>
-
-      <p class="hero-tag">[TFN]</p>
-      <h1 class="hero-title">Task Force Norse</h1>
-      <p class="hero-subtitle">Norsk milsim &nbsp;·&nbsp; Autentisk &nbsp;·&nbsp; Samarbeid</p>
-      <div class="hero-buttons">
-        <a href="#bli-med" class="btn-primary">Bli med i TFN</a>
-        <a href="#om" class="btn-secondary">Les mer</a>
+      <h1 class="hero-title">Task Force<br><em>Norse</em></h1>
+      <p class="hero-sub">Norsktalende milsim-enhet i Arma Reforger. Norsk fagspråk, norsk taktikk, norsk humor — og full alvorlighetsgrad bare når oppdraget krever det.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#bli-med">Bli med i TFN <span class="btn-arrow">→</span></a>
+        <a class="btn btn-ghost" href="#om">Brief meg</a>
       </div>
-    </div>
-
-    <!-- Ticker-ribbon -->
-    <div class="hero-ribbon">
-      <div class="hero-ribbon-inner">
-        <div class="r-stat">
-          <span>POS</span>
-          <b>59°54'N · 10°45'E</b>
-        </div>
-        <div class="ticker-window">
-          <div class="ticker">
-            <span>OP CLIFFHANGER 1 · COMPLETE</span><span class="t-sep">×</span>
-            <span>OP CLIFFHANGER 2 · COMPLETE</span><span class="t-sep">×</span>
-            <span>OP BROKEN HAMMER 3 · COMPLETE</span><span class="t-sep">×</span>
-            <span>NESTE BRIEF · SØN 18:45 CET</span><span class="t-sep">×</span>
-            <span>JSTF · KOMPANI-NIVÅ · ALLE TROPPER</span><span class="t-sep">×</span>
-            <!-- Duplikat for sømløs loop -->
-            <span>OP CLIFFHANGER 1 · COMPLETE</span><span class="t-sep">×</span>
-            <span>OP CLIFFHANGER 2 · COMPLETE</span><span class="t-sep">×</span>
-            <span>OP BROKEN HAMMER 3 · COMPLETE</span><span class="t-sep">×</span>
-            <span>NESTE BRIEF · SØN 18:45 CET</span><span class="t-sep">×</span>
-            <span>JSTF · KOMPANI-NIVÅ · ALLE TROPPER</span><span class="t-sep">×</span>
-          </div>
-        </div>
-        <div class="r-stat" style="text-align:right">
-          <span>SIG</span>
-          <b>TS3 + CVON</b>
-        </div>
-      </div>
-    </div>
-
-    <div class="scroll-indicator">↓ Scroll</div>
-  </section>
-
-  <!-- STATS-BAR -->
-  <div class="stats-bar">
-    <div class="stat">
-      <div class="stat-value">Norsk</div>
-      <div class="stat-label">Kun norsktalende</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">30+</div>
-      <div class="stat-label">Medlemmer</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">Søndager</div>
-      <div class="stat-label">18:45 – 22:00 CET</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">PC</div>
-      <div class="stat-label">Kun PC</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">Arma Reforger</div>
-      <div class="stat-label">Spill</div>
     </div>
   </div>
 
-  <!-- OM TFN -->
-  <section id="om">
-    <div class="section-inner">
-      <div class="om-grid">
-        <div class="om-text fade-in">
-          <p class="section-eyebrow">001 · HVEM ER VI</p>
-          <h2 class="section-title">Task Force Norse</h2>
-          <div class="section-divider"></div>
-          <p>Task Force Norse er en norsk <a href="https://en.wikipedia.org/wiki/Military_simulation_(gaming)" target="_blank" rel="noopener">milsim</a>-enhet i <a href="https://reforger.armaplatform.com/" target="_blank" rel="noopener">Arma Reforger</a>. Vi er utelukkende åpne for norsktalende spillere, og har som mål å tilby autentisk milsim på norsk — som norsk styrke, med norsk taktikk og terminologi.</p>
-          <p>Kjernemedlemmene våre har lang erfaring fra det norske milsim-miljøet, og vi startet opp operasjoner i Arma Reforger i august 2025. Vi fyller en nisje i et miljø som ellers er dominert av engelsktalende enheter.</p>
-          <p>Vi bruker korrekt norsk militærfagspråk internt — og NATO-engelsk i samarbeid med de skandinaviske troppene vi opererer med. Medlemmer med bakgrunn fra Forsvaret bidrar med kunnskap og autentisk terminologi.</p>
+  <!-- POS som GUI-element -->
+  <div class="hero-pos">
+    <span class="pos-lbl">POS</span>
+    <span>59°54'N · 10°45'E</span>
+  </div>
+</section>
+
+<!-- STATS STRIPE -->
+<div class="stripe">
+  <div class="stripe-inner">
+    <div class="cell"><div class="k">Språk</div><div class="v">Norsk</div></div>
+    <div class="cell"><div class="k">Medlemmer</div><div class="v">30+</div></div>
+    <div class="cell"><div class="k">Operasjon</div><div class="v">Søn 18:45</div></div>
+    <div class="cell"><div class="k">Plattform</div><div class="v">PC</div></div>
+    <div class="cell"><div class="k">Spill</div><div class="v">Arma Reforger</div></div>
+  </div>
+</div>
+
+<!-- OM TFN -->
+<section id="om">
+  <div class="wrap">
+    <div class="om-grid">
+      <div class="reveal">
+        <div class="eyebrow">001 · Hvem er vi</div>
+        <h2 class="h2">Task Force <em style="font-style:normal;color:var(--ember)">Norse</em></h2>
+        <div class="om-text">
+          <p>Task Force Norse er en norsk <a href="https://en.wikipedia.org/wiki/Military_simulation_(gaming)" target="_blank" rel="noopener">milsim</a>-enhet i <a href="https://reforger.armaplatform.com/" target="_blank" rel="noopener">Arma Reforger</a>. Vi er åpne kun for <strong>norsktalende spillere</strong>, og vårt mål er autentisk milsim på norsk — som norsk styrke, med norsk taktikk og terminologi.</p>
+          <p>Kjernemedlemmene har lang erfaring fra det norske milsim-miljøet, og vi startet operasjoner i Reforger i august 2025. Vi fyller en nisje i et miljø dominert av engelsktalende enheter.</p>
+          <p>Vi bruker korrekt norsk militærfagspråk internt — og NATO-engelsk i flernasjonale operasjoner. Medlemmer med bakgrunn fra Forsvaret bidrar med kunnskap og ekte terminologi.</p>
+          <div class="callout">
+            ↳ "Ingen yes sir, no sir. Ingen bootcamp.<br>Vi tar oppdraget seriøst — ikke oss selv."
+          </div>
         </div>
-        <div class="om-image fade-in">
-          <img src="assets/img-patch-closeup.png" alt="TFN-soldat i Arma Reforger">
-        </div>
+      </div>
+      <div class="om-photo reveal">
+        <img src="assets/img-patch-closeup.png" alt="TFN soldat">
+        <div class="om-photo-meta"><span>FILE · IMG_001</span><span>NOR · ØST</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- MILSIM -->
-  <section id="milsim">
-    <div class="section-inner">
-      <div class="milsim-intro fade-in">
-        <p class="section-eyebrow">002 · VÅR FILOSOFI</p>
-        <h2 class="section-title">Hva mener vi med Milsim?</h2>
-        <div class="section-divider"></div>
-        <p><a href="https://en.wikipedia.org/wiki/Military_simulation_(gaming)" target="_blank" rel="noopener">Milsim</a> — military simulation — handler for oss om en balanse mellom realisme, autensitet, samarbeid og innlevelse. Vi gjennomfører oppdrag så nær virkeligheten som mulig, med norsk utstyr og norske taktikker der det lar seg gjøre.</p>
-        <p>Men vi er ikke "realsim". Ingen "yes sir, no sir". Ingen bootcamp. Vi tar oppdraget seriøst — ikke oss selv.</p>
+<!-- MILSIM -->
+<section id="milsim">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">002 · Vår filosofi</div>
+      <h2 class="h2">Hva mener vi<br>med milsim?</h2>
+      <p class="lede">Military simulation handler for oss om balanse mellom realisme, autensitet, samarbeid og innlevelse. Vi gjennomfører oppdrag så nær virkeligheten som mulig — men vi er ikke "realsim". Det skal være gøy.</p>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="pillar-num">P · 01</div>
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>
+        </div>
+        <div class="pillar-title">Realisme</div>
+        <div class="pillar-text">Norsk utstyr og taktikk der det lar seg gjøre. Vi etterligner norsk styrke og gjennomfører oppdrag basert på faktiske militære prosedyrer.</div>
       </div>
-      <div class="pillars">
-
-        <div class="pillar fade-in">
-          <div class="pillar-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>
-              <line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/>
-              <line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/>
-            </svg>
-          </div>
-          <div class="pillar-title">Realisme</div>
-          <p class="pillar-text">Norsk utstyr og taktikk der det lar seg gjøre. Vi etterligner norsk styrke og gjennomfører oppdrag basert på militære prosedyrer.</p>
+      <div class="pillar">
+        <div class="pillar-num">P · 02</div>
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L3 7v6c0 5.25 3.9 9.74 9 11 5.1-1.26 9-5.75 9-11V7L12 2z"/></svg>
         </div>
-
-        <div class="pillar fade-in">
-          <div class="pillar-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L3 7v6c0 5.25 3.9 9.74 9 11 5.1-1.26 9-5.75 9-11V7L12 2z"/>
-            </svg>
-          </div>
-          <div class="pillar-title">Autensitet</div>
-          <p class="pillar-text">Korrekt norsk fagspråk internt. NATO-engelsk i flernasjonale operasjoner. Erfaring fra Forsvaret bidrar til kunnskap og terminologi.</p>
+        <div class="pillar-title">Autensitet</div>
+        <div class="pillar-text">Korrekt norsk fagspråk internt. NATO-engelsk i flernasjonale ops. Erfaring fra Forsvaret bidrar til ekte terminologi.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">P · 03</div>
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-
-        <div class="pillar fade-in">
-          <div class="pillar-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <div class="pillar-title">Samarbeid</div>
-          <p class="pillar-text">Koordinering av mennesker for å løse taktiske utfordringer. Erfarne hjelper nye. Miljøet er hjelpsomt og inkluderende.</p>
+        <div class="pillar-title">Samarbeid</div>
+        <div class="pillar-text">Koordinering for å løse taktiske utfordringer. Erfarne hjelper nye. Miljøet er hjelpsomt og inkluderende — ingen gatekeeping.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">P · 04</div>
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         </div>
-
-        <div class="pillar fade-in">
-          <div class="pillar-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="3 11 22 2 13 21 11 13 3 11"/>
-            </svg>
-          </div>
-          <div class="pillar-title">Innlevelse</div>
-          <p class="pillar-text">Operasjonsordre. Debrief etter oppdraget. Taktiske beslutninger under press. Selv om det er et spill, føles det ekte.</p>
-        </div>
-
+        <div class="pillar-title">Innlevelse</div>
+        <div class="pillar-text">Operasjonsordre. Debrief etter oppdraget. Taktiske beslutninger under press. Det er et spill — men det føles ekte.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- NORDIC JOINT OPS -->
-  <section id="nordic">
-    <div class="section-inner">
-      <div class="nordic-grid">
-        <div class="nordic-text fade-in">
-          <p class="section-eyebrow">003 · SKANDINAVISK SAMARBEID</p>
-          <h2 class="section-title">Joint Scandinavian Task Force</h2>
-          <div class="section-divider"></div>
+<!-- JSTF -->
+<section id="nordic">
+  <div class="wrap">
+    <div class="nordic-grid">
+      <div class="reveal">
+        <div class="eyebrow">003 · Skandinavisk samarbeid</div>
+        <h2 class="h2">Joint Scandinavian<br>Task Force</h2>
+        <div class="om-text">
           <p>TFN er en selvstendig norsk enhet, men samarbeider fast med en dansk og en svensk tropp i <strong>Joint Scandinavian Task Force (JSTF)</strong> — et fiktivt NATO-rammeverk der de tre uavhengige enhetene gjennomfører felles oppdrag som kompani.</p>
           <p>I JSTF koordinerer TFN-soldater på norsk internt, og på NATO-engelsk med de øvrige troppene. Det gir en realisme få spillmiljøer kan tilby.</p>
-          <p>Samarbeidet gir tilgang til et mye bredere spekter av oppdrag — logistikk, luftstøtte, mekanisert infanteri og spesialiserte funksjoner som JTAC og helikoptercrew.</p>
+          <p>Samarbeidet gir tilgang til et bredere spekter av oppdrag — logistikk, luftstøtte, mekanisert infanteri og spesialiserte funksjoner som JTAC og helikoptercrew.</p>
         </div>
-        <div class="fade-in nordic-right">
-          <img src="assets/img-joint-ops.png" alt="Joint Scandinavian Task Force formasjon" style="width:100%; border:1px solid var(--border); margin-bottom:2rem; display:block;">
-          <div class="nordic-flags">
-            <svg viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg" title="Norge">
-              <rect width="22" height="16" fill="#EF2B2D"/>
-              <rect x="6" width="4" height="16" fill="#FFF"/>
-              <rect y="6" width="22" height="4" fill="#FFF"/>
-              <rect x="7" width="2" height="16" fill="#002868"/>
-              <rect y="7" width="22" height="2" fill="#002868"/>
-            </svg>
-            <svg viewBox="0 0 28 16" xmlns="http://www.w3.org/2000/svg" title="Danmark">
-              <rect width="28" height="16" fill="#C60C30"/>
-              <rect x="9" width="4" height="16" fill="#FFF"/>
-              <rect y="6" width="28" height="4" fill="#FFF"/>
-            </svg>
-            <svg viewBox="0 0 22 14" xmlns="http://www.w3.org/2000/svg" title="Sverige">
-              <rect width="22" height="14" fill="#006AA7"/>
-              <rect x="6" width="4" height="14" fill="#FECC02"/>
-              <rect y="5" width="22" height="4" fill="#FECC02"/>
-            </svg>
-          </div>
-          <div class="nordic-stats">
-            <div class="nordic-stat">
-              <div class="nordic-stat-value">3</div>
-              <div class="nordic-stat-label">Selvstendige enheter</div>
-            </div>
-            <div class="nordic-stat">
-              <div class="nordic-stat-value">40–50</div>
-              <div class="nordic-stat-label">Spillere totalt i JSTF</div>
-            </div>
-            <div class="nordic-stat">
-              <div class="nordic-stat-value">Kompani</div>
-              <div class="nordic-stat-label">Felles operasjonsnivå</div>
-            </div>
-            <div class="nordic-stat">
-              <div class="nordic-stat-value">NATO</div>
-              <div class="nordic-stat-label">Fiktivt rammeverk</div>
-            </div>
-          </div>
+        <div class="flag-row" style="margin-top:28px">
+          <svg viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg"><rect width="22" height="16" fill="#EF2B2D"/><rect x="6" width="4" height="16" fill="#FFF"/><rect y="6" width="22" height="4" fill="#FFF"/><rect x="7" width="2" height="16" fill="#002868"/><rect y="7" width="22" height="2" fill="#002868"/></svg>
+          <svg viewBox="0 0 28 16" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="16" fill="#C60C30"/><rect x="9" width="4" height="16" fill="#FFF"/><rect y="6" width="28" height="4" fill="#FFF"/></svg>
+          <svg viewBox="0 0 22 14" xmlns="http://www.w3.org/2000/svg"><rect width="22" height="14" fill="#006AA7"/><rect x="6" width="4" height="14" fill="#FECC02"/><rect y="5" width="22" height="4" fill="#FECC02"/></svg>
+          <span class="flag-lbl">NOR · DEN · SWE</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- VIDEO-BAKGRUNN -->
-  <div id="video-bg">
-    <video autoplay muted loop playsinline>
-      <source src="assets/heli-bg-1-web.mp4" type="video/mp4">
-      <source src="assets/heli-bg-2-web.mp4" type="video/mp4">
-    </video>
-    <div class="video-content">
-      <p class="section-tag">Se oss i aksjon</p>
-      <h2 class="video-heading">Task Force Norse i felt</h2>
-      <div class="section-divider" style="margin: 1.5rem auto;"></div>
-      <a href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener" class="btn-primary">Se på YouTube →</a>
+      <div class="reveal">
+        <div class="jstf-img">
+          <img src="assets/img-joint-ops.png" alt="JSTF kompani-formasjon">
+        </div>
+        <div class="nordic-stats">
+          <div class="nordic-stat"><div class="k">Selvstendige enheter</div><div class="v">3</div></div>
+          <div class="nordic-stat"><div class="k">Spillere i JSTF</div><div class="v">40–50</div></div>
+          <div class="nordic-stat"><div class="k">Operasjonsnivå</div><div class="v">Kompani</div></div>
+          <div class="nordic-stat"><div class="k">Rammeverk</div><div class="v">NATO</div></div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- TWITCH (skjult når TWITCH_CHANNEL = null) -->
-  <div id="twitch-section" style="display:none">
-    <div class="section-inner">
-      <p class="section-eyebrow"><span class="live-dot"></span>LIVE NÅ</p>
-      <div id="twitch-embed"></div>
+<!-- REKRUTTERING -->
+<section id="bli-med">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">004 · Rekruttering</div>
+      <h2 class="h2">Bli med i<br>Task Force Norse</h2>
+      <p class="lede">Norsktalende spillere som ønsker autentisk, innlevelsesrik milsim — uten unødvendig stivhet. Du trenger ingen erfaring fra før. Vi lærer deg det du trenger.</p>
+    </div>
+
+    <div class="opord reveal">
+      <div class="opord-head">
+        <div><span class="l">OPPDRAGSPLAN</span> · REKRUTTERING · TFN-S1</div>
+        <div>KLASSE: ÅPEN · 2026</div>
+      </div>
+      <div class="opord-body">
+        <div class="phases">
+          <div class="phase">
+            <div class="phase-id">FASE · ALFA</div>
+            <div class="phase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></div>
+            <div class="phase-title">Første kontakt</div>
+            <div class="phase-text">Klikk på Discord-lenken og fyll ut den korte søknaden. Du vil bli bedt om å svare på noen enkle spørsmål fra staben — tar bare et par minutter.</div>
+          </div>
+          <div class="phase">
+            <div class="phase-id">FASE · BRAVO</div>
+            <div class="phase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+            <div class="phase-title">Uformelt intervju</div>
+            <div class="phase-text">En kort, hyggelig prat med en fra staben. Bli kjent og avklare forventninger — ingen formell søknadsprosess.</div>
+          </div>
+          <div class="phase">
+            <div class="phase-id">FASE · CHARLIE</div>
+            <div class="phase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
+            <div class="phase-title">Bli med på oppdrag</div>
+            <div class="phase-text">Full tilgang. Møt opp på søndagsoppdraget og start reisen din i Task Force Norse.</div>
+          </div>
+        </div>
+        <div class="requirements">
+          <div class="req"><div class="k">Språk</div><div class="v">Norsk · flytende</div></div>
+          <div class="req"><div class="k">Plattform</div><div class="v">PC (kun)</div></div>
+          <div class="req"><div class="k">Mikrofon</div><div class="v">Påkrevd</div></div>
+          <div class="req"><div class="k">Stemmeklient</div><div class="v"><a href="https://www.teamspeak3.com/teamspeak-download.php" target="_blank" rel="noopener">TS3</a> + <a href="https://github.com/CoalitionArma/Coalition-VON" target="_blank" rel="noopener">CVON</a></div></div>
+          <div class="req"><div class="k">Oppmøte</div><div class="v">Møt når du kan</div></div>
+          <div class="req"><div class="k">Alder</div><div class="v">Vurderes individuelt</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row reveal">
+      <a class="btn btn-primary" href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener">Bli med på Discord <span class="btn-arrow">→</span></a>
+      <a class="btn btn-ghost" href="#gallery">Se oss i aksjon</a>
     </div>
   </div>
+</section>
 
-  <!-- GALLERI -->
-  <section id="gallery">
-    <div class="section-inner">
-      <div class="fade-in">
-        <p class="section-eyebrow">004 · OPERASJONSBILDER</p>
-        <h2 class="section-title">Bilder fra felt</h2>
-        <div class="section-divider"></div>
-      </div>
-      <div class="gallery-grid fade-in" id="galleryGrid"></div>
+<!-- GALLERI -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">005 · Operasjonsbilder</div>
+      <h2 class="h2">Bilder fra felt</h2>
+      <p class="lede">Skjermbilder fra TFN- og JSTF-operasjoner i Arma Reforger. Mer i Discord, og hele oppdrag på YouTube.</p>
     </div>
-  </section>
+    <div class="gallery-grid reveal" id="galleryGrid"></div>
+  </div>
+</section>
 
-  <!-- BLI MED -->
-  <section id="bli-med">
-    <div class="section-inner">
-      <div class="join-intro fade-in">
-        <p class="section-eyebrow">005 · REKRUTTERING</p>
-        <h2 class="section-title">Bli med i Task Force Norse</h2>
-        <div class="section-divider"></div>
-        <p>Vi ser etter norsktalende spillere som ønsker autentisk, innlevelsesrik milsim — uten unødvendig stivhet. Du trenger ingen erfaring med milsim fra før. Vi lærer deg det du trenger.</p>
-      </div>
+<!-- TWITCH (skjult når TWITCH_CHANNEL = null) -->
+<div id="twitch-section" style="display:none">
+  <div class="wrap">
+    <div class="eyebrow"><span class="live-dot"></span>Live nå</div>
+    <div id="twitch-embed"></div>
+  </div>
+</div>
 
-      <div class="oporder-box fade-in">
-        <div class="oporder-header">OPPDRAGSPLAN — REKRUTTERING · TFN-S1</div>
-        <div class="join-phases">
-
-          <div class="phase">
-            <div class="phase-label">FASE ALFA</div>
-            <div class="tac-frame">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                <polyline points="10 17 15 12 10 7"/>
-                <line x1="15" y1="12" x2="3" y2="12"/>
-              </svg>
-            </div>
-            <div class="phase-point">IP — Innledende kontakt</div>
-            <div class="phase-name">Første kontakt</div>
-            <p class="phase-text">Klikk på Discord-lenken og fyll ut den korte søknaden. Du vil bli bedt om å svare på noen enkle spørsmål fra staben — tar bare et par minutter.</p>
-          </div>
-
-          <div class="advance-arrow">
-            <svg viewBox="0 0 48 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="0" y1="10" x2="38" y2="10" stroke="currentColor" stroke-width="1.5"/>
-              <polyline points="32,3 44,10 32,17" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter"/>
-            </svg>
-          </div>
-
-          <div class="phase">
-            <div class="phase-label">FASE BRAVO</div>
-            <div class="tac-frame">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
-                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
-              </svg>
-            </div>
-            <div class="phase-point">CP 1 — Rekognisering</div>
-            <div class="phase-name">Uformelt intervju</div>
-            <p class="phase-text">En kort, hyggelig prat med en fra staben. Formålet er å bli kjent, gi deg informasjonen du trenger og avklare forventninger.</p>
-          </div>
-
-          <div class="advance-arrow">
-            <svg viewBox="0 0 48 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="0" y1="10" x2="38" y2="10" stroke="currentColor" stroke-width="1.5"/>
-              <polyline points="32,3 44,10 32,17" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter"/>
-            </svg>
-          </div>
-
-          <div class="phase">
-            <div class="phase-label">FASE CHARLIE</div>
-            <div class="tac-frame">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="8.5" cy="7" r="4"/>
-                <polyline points="17 11 19 13 23 9"/>
-              </svg>
-            </div>
-            <div class="phase-point">OBJ TFN — Innsetting</div>
-            <div class="phase-name">Bli med på oppdrag</div>
-            <p class="phase-text">Full tilgang. Møt opp på søndagsoppdraget og start reisen din i Task Force Norse.</p>
-          </div>
-
+<!-- YOUTUBE -->
+<section id="video">
+  <div class="video-grid">
+    <div class="video-left">
+      <video autoplay muted loop playsinline>
+        <source src="assets/heli-bg-2-web.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-right">
+      <div class="eyebrow">006 · YouTube-kanal</div>
+      <h2 class="h2">Se oss<br>i aksjon</h2>
+      <p>Hele oppdrag, kuttet sammen og publisert på TFNs YouTube-kanal. Følg med for nye opptak etter hvert søndagsoppdrag.</p>
+      <a class="yt-card" href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">
+        <div class="yt-thumb"><img src="assets/gallery/g05.png" alt="TFN i aksjon"></div>
+        <div class="yt-body">
+          <div class="k">Siste video</div>
+          <div class="t">OP Cliffhanger — JSTF Combined Arms</div>
+          <div class="m">@TaskForceNorse · YouTube →</div>
         </div>
-        <div class="oporder-footer">KLASSE: ÅPEN &nbsp;·&nbsp; TASK FORCE NORSE &nbsp;·&nbsp; S1 REKRUTTERING</div>
-      </div>
-
-      <div class="requirements fade-in">
-        <div class="req">
-          <div class="req-label">Språk</div>
-          <div class="req-value">Norsk (flytende)</div>
-        </div>
-        <div class="req">
-          <div class="req-label">Platform</div>
-          <div class="req-value">PC (kun)</div>
-        </div>
-        <div class="req">
-          <div class="req-label">Mikrofon</div>
-          <div class="req-value">Påkrevd</div>
-        </div>
-        <div class="req">
-          <div class="req-label"><a href="https://www.teamspeak3.com/teamspeak-download.php" target="_blank" rel="noopener" class="req-link">Teamspeak 3 ↗</a></div>
-          <div class="req-value"><a href="https://github.com/CoalitionArma/Coalition-VON" target="_blank" rel="noopener" class="req-link">+ CVON-plugin ↗</a></div>
-        </div>
-        <div class="req">
-          <div class="req-label">Oppmøtekrav</div>
-          <div class="req-value">Ingen — møt opp når du kan</div>
-        </div>
-        <div class="req">
-          <div class="req-label">Alder</div>
-          <div class="req-value">Vurderes individuelt</div>
-        </div>
-      </div>
-
-      <div class="join-cta fade-in">
-        <a href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener" class="btn-primary">Bli med på Discord</a>
-        <a href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener" class="btn-secondary">Se oss i aksjon →</a>
+      </a>
+      <div class="yt-btn-row">
+        <a class="btn btn-ghost" href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">Åpne kanal <span class="btn-arrow">→</span></a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">
-      <img src="assets/logo-patch.png" alt="Task Force Norse emblem">
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div class="foot-brand">
+      <img src="assets/logo-patch.png" alt="TFN">
+      <div class="name">Task Force Norse</div>
+      <div class="sub">[TFN] · Norsk Milsim · Arma Reforger</div>
     </div>
-    <div class="footer-name">Task Force Norse</div>
-    <div class="footer-sub">[TFN] &nbsp;·&nbsp; Norsk Milsim &nbsp;·&nbsp; Arma Reforger</div>
-    <div class="footer-links">
-      <a href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener">Discord</a>
-      <a href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">YouTube</a>
-      <a href="#om">Om TFN</a>
-      <a href="#gallery">Galleri</a>
-      <a href="#bli-med">Bli med</a>
+    <div class="foot-col">
+      <h4>Navigasjon</h4>
+      <ul>
+        <li><a href="#om">Om TFN</a></li>
+        <li><a href="#milsim">Milsim</a></li>
+        <li><a href="#nordic">JSTF</a></li>
+        <li><a href="#bli-med">Bli med</a></li>
+        <li><a href="#gallery">Galleri</a></li>
+        <li><a href="#video">YouTube</a></li>
+      </ul>
     </div>
-    <div class="footer-divider"></div>
-    <div class="footer-legal">
-      Task Force Norse er en spillgruppe i Arma Reforger og har ingen tilknytning til Forsvaret, Hæren eller norske militære styrker. Alle operasjoner, enheter og militære strukturer på denne siden er fiktive og gjennomføres utelukkende som del av spillet.
+    <div class="foot-col">
+      <h4>Kanaler</h4>
+      <ul>
+        <li><a href="https://discord.gg/r8m6QrFmMj" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="https://www.youtube.com/@TaskForceNorse" target="_blank" rel="noopener">YouTube</a></li>
+      </ul>
     </div>
-    <div class="footer-copy">© 2026 Task Force Norse</div>
-  </footer>
+    <div class="foot-col">
+      <h4>Verktøy</h4>
+      <ul>
+        <li><a href="https://www.teamspeak3.com/teamspeak-download.php" target="_blank" rel="noopener">TeamSpeak 3</a></li>
+        <li><a href="https://github.com/CoalitionArma/Coalition-VON" target="_blank" rel="noopener">CVON-plugin</a></li>
+        <li><a href="https://reforger.armaplatform.com/" target="_blank" rel="noopener">Arma Reforger</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 Task Force Norse</div>
+    <div>norskmilsim.no</div>
+  </div>
+  <div class="foot-legal">
+    Task Force Norse er en spillgruppe i Arma Reforger og har ingen tilknytning til Forsvaret, Hæren eller norske militære styrker. Alle operasjoner, enheter og militære strukturer på denne siden er fiktive og gjennomføres utelukkende som del av spillet.
+  </div>
+</footer>
 
-  <script>
-    // ── KONFIG ───────────────────────────────────────────────
-    // Sett kanalnavnet for å aktivere Twitch-embed. null = skjult.
-    const TWITCH_CHANNEL = null;
+<script>
+// ── KONFIG ──────────────────────────────────────────────────
+// Sett kanalnavnet for å vise Twitch-embed. null = skjult.
+const TWITCH_CHANNEL = null;
 
-    // ── TWITCH ───────────────────────────────────────────────
-    if (TWITCH_CHANNEL) {
-      document.getElementById('twitch-section').style.display = 'block';
-      document.getElementById('twitch-embed').innerHTML = `
-        <iframe
-          src="https://player.twitch.tv/?channel=${TWITCH_CHANNEL}&parent=norskmilsim.no"
-          width="100%" height="500"
-          frameborder="0" allowfullscreen>
-        </iframe>`;
-    }
+// ── TWITCH ──────────────────────────────────────────────────
+if (TWITCH_CHANNEL) {
+  document.getElementById('twitch-section').style.display = 'block';
+  document.getElementById('twitch-embed').innerHTML = `
+    <iframe src="https://player.twitch.tv/?channel=${TWITCH_CHANNEL}&parent=norskmilsim.no"
+      frameborder="0" allowfullscreen></iframe>`;
+}
 
-    // ── GALLERI ──────────────────────────────────────────────
-    const SIZE_CLASSES = ['t-a','t-b','t-c','t-d','t-e','t-f','t-g','t-h'];
+// ── GALLERI ─────────────────────────────────────────────────
+const SIZE_CLASSES = ['t-a','t-b','t-c','t-d','t-e','t-f','t-g','t-h'];
 
-    async function loadGallery() {
-      try {
-        const res = await fetch('assets/gallery/manifest.json');
-        const images = await res.json();
-        const grid = document.getElementById('galleryGrid');
-        images.slice(0, 8).forEach((img, i) => {
-          const tile = document.createElement('a');
-          tile.className = `tile ${SIZE_CLASSES[i]}`;
-          tile.href = `assets/gallery/${img.file}`;
-          tile.target = '_blank';
-          tile.rel = 'noopener';
-          tile.innerHTML = `
-            <img src="assets/gallery/${img.file}" alt="${img.label}" loading="lazy">
-            <div class="tile-meta">
-              <span>${img.label}</span>
-              <span>${img.date}</span>
-            </div>`;
-          grid.appendChild(tile);
-        });
-      } catch (e) {
-        console.warn('Galleri kunne ikke lastes:', e);
-      }
-    }
-    loadGallery();
-
-    // ── SCROLL-ANIMASJONER (fra original) ────────────────────
-    window.addEventListener('scroll', () => {
-      const indicator = document.querySelector('.scroll-indicator');
-      if (indicator) indicator.style.opacity = window.scrollY > 80 ? '0' : '1';
+async function loadGallery() {
+  try {
+    const res = await fetch('assets/gallery/manifest.json');
+    const images = await res.json();
+    const grid = document.getElementById('galleryGrid');
+    images.slice(0, 8).forEach((img, i) => {
+      const tile = document.createElement('a');
+      tile.className = `tile ${SIZE_CLASSES[i]}`;
+      tile.href = `assets/gallery/${img.file}`;
+      tile.target = '_blank';
+      tile.rel = 'noopener';
+      tile.innerHTML = `
+        <img src="assets/gallery/${img.file}" alt="${img.label}" loading="lazy">
+        <div class="tile-meta">
+          <span>${img.label}</span>
+          <span class="x">${img.date}</span>
+        </div>`;
+      grid.appendChild(tile);
     });
+  } catch (e) {
+    console.warn('Galleri kunne ikke lastes:', e);
+  }
+}
+loadGallery();
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.12 });
+// ── SCROLL REVEAL ────────────────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ── HERO PARALLAX ────────────────────────────────────────────
+const heroVid = document.getElementById('heroVideo');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y < window.innerHeight && heroVid)
+    heroVid.style.transform = `translateY(${y * 0.3}px) scale(1.05)`;
+}, { passive: true });
 
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        if (window.scrollY >= section.offsetTop - 120) current = section.id;
-      });
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-      });
-    });
-  </script>
+// ── AKTIV NAV-LENKE ──────────────────────────────────────────
+const sections = document.querySelectorAll('section[id], div[id="twitch-section"]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${current}`));
+}, { passive: true });
+</script>
 </body>
 </html>
