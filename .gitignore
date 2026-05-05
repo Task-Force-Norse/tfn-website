@@ -23,3 +23,5 @@ assets/heli-bg-2.mp4
 # Unntaksregel: behold andre filer i assets/-mappa
 !assets/
 !assets/*
+!assets/gallery/
+!assets/gallery/*
