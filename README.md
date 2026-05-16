@@ -11,7 +11,6 @@ Nettsiden er en enkel statisk HTML-side hostet på **GitHub Pages** med domenet 
 ```
 tfn-website/
 ├── index.html          ← hele nettsiden (HTML + CSS + JS i én fil)
-├── index-v3.html       ← backup av forrige versjon
 ├── CNAME               ← peker GitHub Pages til norskmilsim.no
 ├── assets/
 │   ├── logo.png  ← logo (brukes i topbar, hero og footer)
@@ -25,8 +24,6 @@ tfn-website/
 │       ├── gallery.csv                      ← styrer hvilke bilder som vises og i hvilken rekkefølge
 │       ├── YYYY-MM-DD_beskrivelse.png       ← bildene følger denne navnekonvensjonen
 │       └── …
-├── css/style.css       ← kun for index-v3.html (gammel versjon)
-└── js/main.js          ← kun for index-v3.html (gammel versjon)
 ```
 
 ---
