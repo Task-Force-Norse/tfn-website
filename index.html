@@ -368,6 +368,35 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
 .foot-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2)}
 .foot-legal{max-width:760px;margin:24px auto 0;font-family:'Inter',sans-serif;font-size:11.5px;line-height:1.7;color:rgba(236,228,210,0.4);text-align:center;padding:0 16px}
 
+/* ── GALLERI MODAL ── */
+.gallery-cta{margin-top:24px;text-align:center;}
+.gmodal{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(12,15,10,0.96);overflow-y:auto;
+}
+.gmodal.open{display:block;}
+.gmodal-inner{max-width:1100px;margin:0 auto;padding:64px 32px 80px;}
+.gmodal-close{
+  position:fixed;top:24px;right:32px;z-index:101;
+  font-family:'JetBrains Mono',monospace;font-size:20px;
+  color:var(--bone-2);background:none;border:none;cursor:pointer;
+  line-height:1;padding:4px;
+}
+.gmodal-close:hover{color:var(--ember);}
+.gmodal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px;}
+.gmodal-grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--rule);position:relative;}
+.gmodal-grid img{width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:transform .4s,filter .3s;}
+.gmodal-grid a:hover img{transform:scale(1.04);filter:saturate(1.1);}
+.gmodal-grid .tile-meta{
+  position:absolute;left:0;right:0;bottom:0;padding:6px 10px;
+  background:linear-gradient(to top,rgba(12,15,10,0.9),transparent);
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone-2);
+  display:flex;justify-content:space-between;opacity:0;transition:opacity .2s;
+}
+.gmodal-grid a:hover .tile-meta{opacity:1;}
+@media(max-width:600px){.gmodal-grid{grid-template-columns:repeat(2,1fr);}.gmodal-inner{padding:48px 16px 64px;}}
+
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
@@ -651,15 +680,9 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
       <h2 class="h2">Bilder fra felt</h2>
       <p class="lede">Skjermbilder fra TFN- og Nordic Joint Ops-operasjoner i Arma Reforger. Mer i Discord, og hele oppdrag på YouTube.</p>
     </div>
-    <div class="gallery-grid reveal">
-      <a class="tile t-a" href="assets/gallery/bef8y3tqx6eg1.png" target="_blank" rel="noopener"><img src="assets/gallery/bef8y3tqx6eg1.png" alt="" loading="lazy"><div class="tile-meta"><span>Norsk soldat · Ørken-deployering</span><span class="x">2026·02·08</span></div></a>
-      <a class="tile t-b" href="assets/gallery/g11.png" target="_blank" rel="noopener"><img src="assets/gallery/g11.png" alt="" loading="lazy"><div class="tile-meta"><span>Mekanisert · Konvoi-klargjøring</span><span class="x">2026·02·08</span></div></a>
-      <a class="tile t-c" href="assets/gallery/g03.png" target="_blank" rel="noopener"><img src="assets/gallery/g03.png" alt="" loading="lazy"><div class="tile-meta"><span>Rekognosering · Skogsposisjon</span><span class="x">2026·03·08</span></div></a>
-      <a class="tile t-d" href="assets/gallery/20251019204943_1.jpg" target="_blank" rel="noopener"><img src="assets/gallery/20251019204943_1.jpg" alt="" loading="lazy"><div class="tile-meta"><span>CQB · Hangar-clearing</span><span class="x">2025·10·19</span></div></a>
-      <a class="tile t-e" href="assets/gallery/g12.png" target="_blank" rel="noopener"><img src="assets/gallery/g12.png" alt="" loading="lazy"><div class="tile-meta"><span>Mekanisert · Framrykk</span><span class="x">2026·03·08</span></div></a>
-      <a class="tile t-f" href="assets/gallery/g01.png" target="_blank" rel="noopener"><img src="assets/gallery/g01.png" alt="" loading="lazy"><div class="tile-meta"><span>CQB · Byoperasjon</span><span class="x">2026·02·22</span></div></a>
-      <a class="tile t-g" href="assets/gallery/g04.png" target="_blank" rel="noopener"><img src="assets/gallery/g04.png" alt="" loading="lazy"><div class="tile-meta"><span>Wadi-kryssing · Kjøretøy</span><span class="x">2026·02·15</span></div></a>
-      <a class="tile t-h" href="assets/gallery/g02.png" target="_blank" rel="noopener"><img src="assets/gallery/g02.png" alt="" loading="lazy"><div class="tile-meta"><span>Stridskontakt · Ørken</span><span class="x">2026·02·01</span></div></a>
+    <div class="gallery-grid reveal" id="gallery-grid"></div>
+    <div class="gallery-cta reveal">
+      <button class="btn btn-ghost" id="gallery-all-btn">Se alle bilder <span class="btn-arrow">→</span></button>
     </div>
   </div>
 </section>
@@ -762,7 +785,69 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
   </div>
 </footer>
 
+<!-- GALLERI MODAL -->
+<div id="gallery-modal" class="gmodal" aria-hidden="true">
+  <div class="gmodal-inner">
+    <button class="gmodal-close" id="gallery-modal-close" aria-label="Lukk">✕</button>
+    <div class="eyebrow">Alle operasjonsbilder</div>
+    <div class="gmodal-grid" id="gmodal-grid"></div>
+  </div>
+</div>
+
 <script>
+// ── GALLERI (CSV) ────────────────────────────────────────────
+const TILE_CLASSES = ['t-a','t-b','t-c','t-d','t-e','t-f','t-g','t-h'];
+let allGalleryImages = [];
+
+fetch('assets/gallery/gallery.csv')
+  .then(r => r.text())
+  .then(csv => {
+    allGalleryImages = csv.trim().split('\n').slice(1).map(row => {
+      const [file, label, date] = row.split(',');
+      return { file: file.trim(), label: label.trim(), date: date.trim() };
+    });
+
+    const grid = document.getElementById('gallery-grid');
+    if (grid) {
+      grid.innerHTML = allGalleryImages.slice(0, TILE_CLASSES.length).map((img, i) => `
+        <a class="tile ${TILE_CLASSES[i]}" href="assets/gallery/${img.file}" target="_blank" rel="noopener">
+          <img src="assets/gallery/${img.file}" alt="" loading="lazy">
+          <div class="tile-meta"><span>${img.label}</span><span class="x">${img.date}</span></div>
+        </a>`).join('');
+    }
+
+    const btn = document.getElementById('gallery-all-btn');
+    if (btn && allGalleryImages.length <= TILE_CLASSES.length) btn.style.display = 'none';
+  })
+  .catch(() => {});
+
+document.getElementById('gallery-all-btn')?.addEventListener('click', () => {
+  const modalGrid = document.getElementById('gmodal-grid');
+  if (modalGrid) {
+    modalGrid.innerHTML = allGalleryImages.map(img => `
+      <a href="assets/gallery/${img.file}" target="_blank" rel="noopener">
+        <img src="assets/gallery/${img.file}" alt="" loading="lazy">
+        <div class="tile-meta"><span>${img.label}</span><span class="x">${img.date}</span></div>
+      </a>`).join('');
+  }
+  const modal = document.getElementById('gallery-modal');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+});
+
+function closeGalleryModal() {
+  const modal = document.getElementById('gallery-modal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.getElementById('gallery-modal-close')?.addEventListener('click', closeGalleryModal);
+document.getElementById('gallery-modal')?.addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeGalleryModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGalleryModal(); });
+
 // ── KONFIG ──────────────────────────────────────────────────
 // Sett kanalnavnet for å vise Twitch-embed. null = skjult.
 const TWITCH_CHANNEL = null;
