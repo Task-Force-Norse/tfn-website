@@ -14,7 +14,7 @@ tfn-website/
 ├── index-v3.html       ← backup av forrige versjon
 ├── CNAME               ← peker GitHub Pages til norskmilsim.no
 ├── assets/
-│   ├── Kopi_av_Patch_skog_tekst.png  ← logo (brukes i topbar, hero og footer)
+│   ├── logo.png  ← logo (brukes i topbar, hero og footer)
 │   ├── hero-convoy.png         ← bakgrunnsbilde i "Hvem vi er"
 │   ├── img-joint-ops.png       ← bilde i JSTF-seksjonen
 │   ├── heli-bg-1-web.mp4       ← helikoptervideo (hero-bakgrunn)
@@ -40,16 +40,46 @@ tfn-website/
 
 Alle endringer gjøres direkte på GitHub.com — ingen koding eller terminal nødvendig. Nettsiden oppdateres automatisk innen ~1 minutt etter at du lagrer.
 
-### Bytte et galleri-bilde
+### Oppdatere galleriet
 
-1. Gå til [assets/gallery/](https://github.com/Task-Force-Norse/tfn-website/tree/main/assets/gallery) i repositoriet
-2. Klikk **Add file → Upload files** og last opp det nye bildet
-3. Åpne `index.html` → klikk blyant-ikonet (✏️) øverst til høyre
-4. Finn den aktuelle `<a class="tile ...">` i galleriseksjonen (~linje 600)
-5. Endre `src=` og `href=` til det nye filnavnet, og oppdater teksten i `<div class="tile-meta">`
-6. Klikk **Commit changes**
+Galleriet styres av filen [`assets/gallery/gallery.csv`](https://github.com/Task-Force-Norse/tfn-website/blob/main/assets/gallery/gallery.csv) — ikke av `index.html`. Ingen HTML-kunnskap nødvendig.
 
-Galleriet viser 8 bilder i fast layout (størst øverst til venstre). Rekkefølgen i HTML-en bestemmer plasseringen.
+#### Slik ser filen ut på GitHub (vises som tabell):
+
+| filnavn | beskrivelse | dato |
+|---|---|---|
+| bef8y3tqx6eg1.png | Norsk soldat · Ørken-deployering | 2026·02·08 |
+| g11.png | Mekanisert · Konvoi-klargjøring | 2026·02·08 |
+| … | … | … |
+
+- **De 8 første radene** vises i galleriet på forsiden (størst øverst til venstre)
+- **Rader under posisjon 8** er arkivert — vises ikke på forsiden, men dukker opp i «Se alle bilder»-vinduet
+- **Rekkefølge** styres av linjerekkefølgen — øverst = fremst
+
+#### Legge til et nytt bilde
+
+1. Last opp bildet til [assets/gallery/](https://github.com/Task-Force-Norse/tfn-website/tree/main/assets/gallery) — klikk **Add file → Upload files**
+   - Navnekonvensjon: `YYYY-MM-DD_Beskrivelse.png` (f.eks. `2026-05-11_CQB-byoperasjon.png`)
+2. Åpne [`assets/gallery/gallery.csv`](https://github.com/Task-Force-Norse/tfn-website/blob/main/assets/gallery/gallery.csv) → klikk blyant-ikonet (✏️)
+3. Legg til en ny linje **øverst** (under header-raden):
+   ```
+   2026-05-11_CQB-byoperasjon.png,CQB · Byoperasjon,2026·05·11
+   ```
+4. Klikk **Commit changes**
+
+Bildet er nå fremst i galleriet. Det gamle bildet som falt ut av topp 8 havner i «Se alle bilder».
+
+#### Endre rekkefølge
+
+Åpne `gallery.csv` med blyant-ikonet og flytt linjer opp eller ned. Lagre.
+
+#### Arkivere et bilde (ta det av forsiden uten å slette)
+
+Flytt raden ned til under posisjon 8 i CSV-en. Bildet forsvinner fra forsiden, men vises fremdeles i «Se alle bilder»-vinduet.
+
+#### «Se alle bilder»-knappen
+
+Vises automatisk under galleriet når CSV-en inneholder mer enn 8 bilder. Åpner et vindu med alle bilder — inkludert de arkiverte. Knappen skjules automatisk hvis det er 8 eller færre bilder totalt.
 
 ### Oppdatere YouTube-video
 
@@ -90,9 +120,9 @@ Finn Twitch-kortet rett under YouTube-kortet (~linje 649):
 
 ### Bytte logo
 
-Last opp ny logofil som `assets/Kopi_av_Patch_skog_tekst.png` — erstatter den eksisterende filen med samme navn. Logoen brukes automatisk i topbar, hero og footer.
+Last opp ny logofil som `assets/logo.png` — erstatter den eksisterende filen med samme navn. Logoen brukes automatisk i topbar, hero og footer.
 
-Hvis du vil bruke et helt annet filnavn på den nye logoen, må du også oppdatere de tre referansene i `index.html` (søk etter `Kopi_av_Patch_skog_tekst.png`).
+Hvis du vil bruke et helt annet filnavn på den nye logoen, må du også oppdatere de tre referansene i `index.html` (søk etter `logo.png`).
 
 > **Tips:** En logo med **gjennomsiktig bakgrunn** (PNG uten hvit bakgrunn) ser best ut mot den mørke bakgrunnen.
 
@@ -130,7 +160,12 @@ Commit og push — embedden vises på nettsiden. Sett tilbake til `null` når st
 
 ## Lokal forhåndsvisning
 
-Åpne `index.html` direkte i nettleseren. Nettsiden fungerer uten server, men videoer og galleri-hover krever at du åpner via en lokal server (f.eks. VS Code Live Server-utvidelsen).
+Galleriet krever en lokal server for å laste CSV-filen — åpne **ikke** `index.html` direkte i nettleseren. Bruk VS Code Live Server:
+
+1. Installer utvidelsen **Live Server** (av Ritwick Dey) fra Extensions-panelet
+2. Åpne `index.html` i editoren
+3. Klikk **Go Live** nede til høyre i statuslinjen
+4. Nettleseren åpner `http://127.0.0.1:5500/index.html` — galleriet lastes normalt
 
 ---
 
