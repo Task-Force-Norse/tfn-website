@@ -22,14 +22,9 @@ tfn-website/
 │   ├── yt-thumbnail.png        ← YouTube-kortets miniatyrbilde
 │   ├── tw-thumbnail.jpg        ← Twitch-kortets miniatyrbilde
 │   └── gallery/
-│       ├── bef8y3tqx6eg1.png   ← fremhevet galleri-bilde (t-a, størst)
-│       ├── g01.png             ← CQB · Byoperasjon
-│       ├── g02.png             ← Stridskontakt · Ørken
-│       ├── g03.png             ← Rekognosering · Skogsposisjon
-│       ├── g04.png             ← Wadi-kryssing · Kjøretøy
-│       ├── g11.png             ← Mekanisert · Konvoi-klargjøring
-│       ├── g12.png             ← Mekanisert · Framrykk
-│       └── 20251019204943_1.jpg ← CQB · Hangar-clearing
+│       ├── gallery.csv                      ← styrer hvilke bilder som vises og i hvilken rekkefølge
+│       ├── YYYY-MM-DD_beskrivelse.png       ← bildene følger denne navnekonvensjonen
+│       └── …
 ├── css/style.css       ← kun for index-v3.html (gammel versjon)
 └── js/main.js          ← kun for index-v3.html (gammel versjon)
 ```
@@ -48,8 +43,8 @@ Galleriet styres av filen [`assets/gallery/gallery.csv`](https://github.com/Task
 
 | filnavn | beskrivelse | dato |
 |---|---|---|
-| bef8y3tqx6eg1.png | Norsk soldat · Ørken-deployering | 2026·02·08 |
-| g11.png | Mekanisert · Konvoi-klargjøring | 2026·02·08 |
+| 2026-02-08_norsk-soldat-orken.png | Norsk soldat · Ørken-deployering | 2026·02·08 |
+| 2026-05-10_Chinook_innsetting.png | Innsetting · Chinook | 2026·05·10 |
 | … | … | … |
 
 - **De 8 første radene** vises i galleriet på forsiden (størst øverst til venstre)
