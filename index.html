@@ -121,25 +121,8 @@ a{color:inherit}
 }
 .hero-online .online-lbl{color:var(--ember)}
 
-/* Discord member-liste i #bli-med */
-.discord-members{margin-top:2rem;}
-.dm-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:0 16px;
-  margin-top:12px;
-}
-.dm-row{
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
-  color:var(--bone-2);display:flex;align-items:center;gap:8px;
-  padding:6px 0;border-bottom:1px solid var(--rule);
-}
-.dm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.dm-dot.online{background:#23a55a;}
-.dm-dot.idle{background:#f0b232;}
-.dm-dot.dnd{background:#f23f43;}
-.dm-overflow{
-  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.15em;
-  color:var(--ember);margin-top:10px;text-align:right;
-}
+/* Discord online-status i #bli-med */
+.discord-status{margin-top:2.5rem;}
 
 .hero-content{
   position:relative;z-index:2;flex:1;
@@ -659,10 +642,8 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
       </div>
     </div>
 
-    <div class="discord-members reveal">
-      <div class="eyebrow"><span class="dot"></span> Online nå</div>
-      <div class="dm-grid" id="dm-grid"></div>
-      <div class="dm-overflow" id="dm-overflow"></div>
+    <div class="discord-status reveal" id="discord-status" style="display:none">
+      <div class="eyebrow"><span class="dot"></span> <span id="discord-status-count">0</span> Online nå</div>
     </div>
 
     <div class="cta-row reveal">
@@ -921,26 +902,12 @@ fetch('https://discord.com/api/guilds/983028802907148298/widget.json')
     const heroEl = document.getElementById('hero-online-count');
     if (heroEl) heroEl.textContent = d.presence_count;
 
-    const grid     = document.getElementById('dm-grid');
-    const overflow = document.getElementById('dm-overflow');
-    const section  = document.querySelector('.discord-members');
-    if (!grid) return;
-
-    const maxShown = window.innerWidth <= 600 ? 8 : 12;
-    const shown = d.members.slice(0, maxShown);
-    if (shown.length === 0) {
-      if (section) section.style.display = 'none';
-      return;
+    const statusEl = document.getElementById('discord-status');
+    const countEl  = document.getElementById('discord-status-count');
+    if (statusEl && d.presence_count > 0) {
+      countEl.textContent = d.presence_count;
+      statusEl.style.display = 'block';
     }
-
-    grid.innerHTML = shown.map(m => `
-      <div class="dm-row">
-        <span class="dm-dot ${m.status}"></span>
-        <span>${m.username}</span>
-      </div>`).join('');
-
-    const rest = d.presence_count - shown.length;
-    if (rest > 0) overflow.textContent = `+ ${rest} til →`;
   })
   .catch(() => {});
 </script>
