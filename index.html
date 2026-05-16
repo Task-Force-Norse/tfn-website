@@ -108,6 +108,39 @@ a{color:inherit}
 }
 .hero-pos .pos-lbl{color:var(--ember)}
 
+/* ONLINE-teller (speiler POS, høyre side) */
+.hero-online{
+  position:absolute;bottom:32px;right:40px;z-index:3;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--bone-2);
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(12,15,10,0.65);
+  border:1px solid var(--rule-strong);
+  padding:6px 12px;
+  pointer-events:none;
+}
+.hero-online .online-lbl{color:var(--ember)}
+
+/* Discord member-liste i #bli-med */
+.discord-members{margin-top:2rem;}
+.dm-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0 16px;
+  margin-top:12px;
+}
+.dm-row{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+  color:var(--bone-2);display:flex;align-items:center;gap:8px;
+  padding:6px 0;border-bottom:1px solid var(--rule);
+}
+.dm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dm-dot.online{background:#23a55a;}
+.dm-dot.idle{background:#f0b232;}
+.dm-dot.dnd{background:#f23f43;}
+.dm-overflow{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.15em;
+  color:var(--ember);margin-top:10px;text-align:right;
+}
+
 .hero-content{
   position:relative;z-index:2;flex:1;
   max-width:1280px;width:100%;margin:0 auto;
@@ -345,6 +378,7 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
   .hero-patch{width:100px}
   .hero-corners{margin:80px 16px 16px}
   .hero-pos{left:24px;bottom:20px}
+  .hero-online{right:24px;bottom:20px}
   .om-grid,.nordic-grid{grid-template-columns:1fr;gap:36px}
   .video-grid{grid-template-columns:1fr;min-height:auto}
   .video-left{min-height:280px;border-right:none;border-bottom:1px solid var(--rule-strong)}
@@ -371,6 +405,7 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
   .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:120px}
   .t-a{grid-column:span 2;grid-row:span 2}
   .t-b,.t-c,.t-d,.t-e,.t-f,.t-g,.t-h{grid-column:span 1;grid-row:span 1}
+  .dm-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
@@ -431,6 +466,12 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
   <div class="hero-pos">
     <span class="pos-lbl">POS</span>
     <span>59°54'N · 10°45'E</span>
+  </div>
+
+  <!-- ONLINE-teller -->
+  <div class="hero-online">
+    <span class="online-lbl">ONLINE</span>
+    <span id="hero-online-count">·</span>
   </div>
 </section>
 
@@ -587,6 +628,12 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
           <div class="req"><div class="k">Alder</div><div class="v">18+ - Unntak kan gjøres for de mellom 16 og 18. Kjernen av våre medlemmer er rundt 25+ år.</div></div>
         </div>
       </div>
+    </div>
+
+    <div class="discord-members reveal">
+      <div class="eyebrow"><span class="dot"></span> Online nå</div>
+      <div class="dm-grid" id="dm-grid"></div>
+      <div class="dm-overflow" id="dm-overflow"></div>
     </div>
 
     <div class="cta-row reveal">
@@ -781,6 +828,36 @@ window.addEventListener('scroll', () => {
   sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
   navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${current}`));
 }, { passive: true });
+
+// ── DISCORD ONLINE ───────────────────────────────────────────
+fetch('https://discord.com/api/guilds/983028802907148298/widget.json')
+  .then(r => r.json())
+  .then(d => {
+    const heroEl = document.getElementById('hero-online-count');
+    if (heroEl) heroEl.textContent = d.presence_count;
+
+    const grid     = document.getElementById('dm-grid');
+    const overflow = document.getElementById('dm-overflow');
+    const section  = document.querySelector('.discord-members');
+    if (!grid) return;
+
+    const maxShown = window.innerWidth <= 600 ? 8 : 12;
+    const shown = d.members.slice(0, maxShown);
+    if (shown.length === 0) {
+      if (section) section.style.display = 'none';
+      return;
+    }
+
+    grid.innerHTML = shown.map(m => `
+      <div class="dm-row">
+        <span class="dm-dot ${m.status}"></span>
+        <span>${m.username}</span>
+      </div>`).join('');
+
+    const rest = d.presence_count - shown.length;
+    if (rest > 0) overflow.textContent = `+ ${rest} til →`;
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
