@@ -14,7 +14,7 @@ tfn-website/
 ├── index-v3.html       ← backup av forrige versjon
 ├── CNAME               ← peker GitHub Pages til norskmilsim.no
 ├── assets/
-│   ├── Kopi_av_Patch_skog_tekst.png  ← logo (brukes i topbar, hero og footer)
+│   ├── logo.png  ← logo (brukes i topbar, hero og footer)
 │   ├── hero-convoy.png         ← bakgrunnsbilde i "Hvem vi er"
 │   ├── img-joint-ops.png       ← bilde i JSTF-seksjonen
 │   ├── heli-bg-1-web.mp4       ← helikoptervideo (hero-bakgrunn)
@@ -120,9 +120,9 @@ Finn Twitch-kortet rett under YouTube-kortet (~linje 649):
 
 ### Bytte logo
 
-Last opp ny logofil som `assets/Kopi_av_Patch_skog_tekst.png` — erstatter den eksisterende filen med samme navn. Logoen brukes automatisk i topbar, hero og footer.
+Last opp ny logofil som `assets/logo.png` — erstatter den eksisterende filen med samme navn. Logoen brukes automatisk i topbar, hero og footer.
 
-Hvis du vil bruke et helt annet filnavn på den nye logoen, må du også oppdatere de tre referansene i `index.html` (søk etter `Kopi_av_Patch_skog_tekst.png`).
+Hvis du vil bruke et helt annet filnavn på den nye logoen, må du også oppdatere de tre referansene i `index.html` (søk etter `logo.png`).
 
 > **Tips:** En logo med **gjennomsiktig bakgrunn** (PNG uten hvit bakgrunn) ser best ut mot den mørke bakgrunnen.
 
