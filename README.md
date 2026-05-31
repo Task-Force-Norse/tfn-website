@@ -12,8 +12,11 @@ Nettsiden er en enkel statisk HTML-side hostet på **GitHub Pages** med domenet 
 tfn-website/
 ├── index.html          ← hele nettsiden (HTML + CSS + JS i én fil)
 ├── CNAME               ← peker GitHub Pages til norskmilsim.no
+├── robots.txt          ← søkemotorindeksering
+├── sitemap.xml         ← nettstedskart for søkemotorer
+├── llms.txt            ← kortfattet beskrivelse for AI-verktøy
 ├── assets/
-│   ├── logo.png  ← logo (brukes i topbar, hero og footer)
+│   ├── logo.png                ← logo (brukes i topbar, hero og footer)
 │   ├── hero-convoy.png         ← bakgrunnsbilde i "Hvem vi er"
 │   ├── img-joint-ops.png       ← bilde i JSTF-seksjonen
 │   ├── heli-bg-1-web.mp4       ← helikoptervideo (hero-bakgrunn)
