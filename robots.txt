@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.norskmilsim.no/sitemap.xml
