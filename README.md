@@ -18,7 +18,8 @@ tfn-website/
 ├── assets/
 │   ├── logo.png                ← logo (brukes i topbar, hero og footer)
 │   ├── hero-convoy.png         ← bakgrunnsbilde i "Hvem vi er"
-│   ├── img-joint-ops.png       ← bilde i JSTF-seksjonen
+│   ├── img-joint-ops.jpg       ← bilde i JSTF-seksjonen
+│   ├── img-joint-ops-old.jpg   ← forrige bilde i JSTF-seksjonen (arkivert, ikke i bruk)
 │   ├── heli-bg-1-web.mp4       ← helikoptervideo (hero-bakgrunn)
 │   ├── background-web.mp4      ← ørkenvideo (Media-seksjon)
 │   ├── yt-thumbnail.png        ← YouTube-kortets miniatyrbilde
