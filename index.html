@@ -253,7 +253,9 @@ section{padding:96px 48px;position:relative;border-bottom:1px solid var(--rule)}
 .jstf-img{
   position:relative;overflow:hidden;border:1px solid var(--rule-strong);margin-bottom:20px;
 }
-.jstf-img img{width:100%;display:block;filter:saturate(.85) contrast(1.05)}
+.jstf-img a{display:block;cursor:pointer}
+.jstf-img img{width:100%;display:block;filter:saturate(.85) contrast(1.05);transition:transform .6s ease}
+.jstf-img a:hover img{transform:scale(1.04)}
 .flag-row{display:flex;gap:14px;align-items:center;margin-bottom:20px}
 .flag-row svg{height:30px;width:auto;border:1px solid var(--rule-strong)}
 .flag-lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-2);margin-left:6px}
@@ -526,7 +528,7 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
 <div class="stripe">
   <div class="stripe-inner">
     <div class="cell"><div class="k">Språk</div><div class="v">Norsk</div></div>
-    <div class="cell"><div class="k">Medlemmer</div><div class="v">30+</div></div>
+    <div class="cell"><div class="k">Medlemmer</div><div class="v">30–40</div></div>
     <div class="cell"><div class="k">Operasjon</div><div class="v">Søn 18:45</div></div>
     <div class="cell"><div class="k">Plattform</div><div class="v">PC</div></div>
     <div class="cell"><div class="k">Spill</div><div class="v">Arma Reforger</div></div>
@@ -618,11 +620,13 @@ footer{padding:64px 48px 48px;background:var(--green-3);border-top:1px solid var
       </div>
       <div class="reveal">
         <div class="jstf-img">
-          <img src="assets/img-joint-ops.jpg" alt="Task Force Norse Nordic Joint Operations ARMA Reforger">
+          <a href="assets/img-joint-ops.jpg" target="_blank" rel="noopener">
+            <img src="assets/img-joint-ops.jpg" alt="Task Force Norse Nordic Joint Operations ARMA Reforger">
+          </a>
         </div>
         <div class="nordic-stats">
           <div class="nordic-stat"><div class="k">Selvstendige enheter</div><div class="v">3</div></div>
-          <div class="nordic-stat"><div class="k">Spillere i Nordic Joint Ops</div><div class="v">50–70</div></div>
+          <div class="nordic-stat"><div class="k">Spillere i Nordic Joint Ops</div><div class="v">70–80</div></div>
           <div class="nordic-stat"><div class="k">Operasjonsnivå</div><div class="v">Kompani</div></div>
           <div class="nordic-stat"><div class="k">Rammeverk</div><div class="v">NATO</div></div>
         </div>
